@@ -1,0 +1,26 @@
+{
+  "name": "obyom-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The official landing page and WebGPU demo for the OBYOM library.",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhivchikpochta-hash/obyom-site.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.11.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
+  }
+}
