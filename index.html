@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OBYOM — простой WebGPU-просмотрщик 3D-моделей в браузере.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>OBYOM — WebGPU 3D viewer</title>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="brand" href="."><img src="assets/obyom-logo.png" alt="OBYOM"> <strong>OBYOM</strong></a>
+      <a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Исходный код ↗</a>
+    </header>
+
+    <section class="intro">
+      <p class="label">WebGPU 3D viewer</p>
+      <h1>Откройте 3D-модель прямо в браузере.</h1>
+      <p>Небольшая статическая демонстрация OBYOM. Никаких установок и сборки на стороне сайта — готовый build библиотеки лежит рядом с этой страницей.</p>
+    </section>
+
+    <section class="viewer-card" aria-labelledby="viewer-title">
+      <div class="viewer-heading">
+        <div>
+          <p class="label">Demo</p>
+          <h2 id="viewer-title">OBYOM logo</h2>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Проверяем поддержку WebGPU…</p>
+      </div>
+      <div class="canvas-frame">
+        <canvas id="viewer" aria-label="Интерактивная 3D-модель OBYOM"></canvas>
+        <p id="message" class="message">Загрузка просмотрщика…</p>
+      </div>
+      <p class="hint">Используйте мышь или касание, чтобы вращать модель.</p>
+    </section>
+
+    <section class="details">
+      <div><strong>Что внутри</strong><span>Обычные HTML, CSS и JavaScript</span></div>
+      <div><strong>Запуск</strong><span>Раздайте эту директорию любым static web server</span></div>
+      <div><strong>Требование</strong><span>Браузер с WebGPU и secure context</span></div>
+    </section>
+
+    <footer>Готовый build библиотеки: <code>bundle.js</code> · модель: <code>assets/3dmodels/stl/OBYOM_LOGO.stl</code></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
