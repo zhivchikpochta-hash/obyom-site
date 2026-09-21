@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 660" role="img" aria-labelledby="title desc">
+  <title id="title">OBYOM logo</title>
+  <desc id="desc">OBYOM geometric logo in orange</desc>
+  <defs>
+    <mask id="logo-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="660" height="660">
+      <image href="obyom-logo.png" x="0" y="0" width="660" height="660" preserveAspectRatio="none" />
+    </mask>
+  </defs>
+  <rect width="660" height="660" fill="#f26a21" mask="url(#logo-mask)" />
+</svg>
