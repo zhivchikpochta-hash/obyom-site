@@ -2,21 +2,31 @@
   var status = document.getElementById('status');
   var message = document.getElementById('message');
 
+  function setStatus(text, state) {
+    status.textContent = '';
+    var dot = document.createElement('span');
+    dot.className = 'status-dot status-dot--' + state;
+    dot.setAttribute('aria-hidden', 'true');
+    status.appendChild(dot);
+    status.appendChild(document.createTextNode(text));
+  }
+
   if (!navigator.gpu) {
-    status.textContent = 'WebGPU недоступен';
-    message.textContent = 'Откройте сайт в актуальном Chrome или Edge с поддержкой WebGPU.';
+    setStatus('WebGPU unavailable', 'error');
+    message.textContent = 'Open this demo in a current browser with WebGPU enabled.';
     return;
   }
 
+  setStatus('Loading viewer…', 'loading');
   var script = document.createElement('script');
   script.src = 'bundle.js';
   script.onload = function () {
-    status.textContent = 'Просмотрщик запущен';
+    setStatus('Viewer ready', 'ready');
     message.remove();
   };
   script.onerror = function () {
-    status.textContent = 'Ошибка загрузки';
-    message.textContent = 'Не найден готовый build библиотеки: bundle.js.';
+    setStatus('Viewer failed to load', 'error');
+    message.textContent = 'The viewer could not be loaded. Check the browser console for details.';
   };
   document.body.appendChild(script);
 }());

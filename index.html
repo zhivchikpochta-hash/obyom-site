@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="OBYOM — простой WebGPU-просмотрщик 3D-моделей в браузере.">
+  <meta name="description" content="OBYOM is a lightweight WebGPU 3D viewer for exploring models directly in the browser.">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="stylesheet" href="styles.css">
@@ -12,38 +12,60 @@
 <body>
   <main class="page">
     <header class="header">
-      <a class="brand" href="."><img src="assets/obyom-logo.png" alt="OBYOM"> <strong>OBYOM</strong></a>
-      <a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Исходный код ↗</a>
+      <a class="brand" href="." aria-label="OBYOM home">
+        <img src="assets/obyom-logo.png" alt="">
+        <strong>OBYOM</strong>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#viewer-title">Demo</a>
+        <a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
+      </nav>
     </header>
 
-    <section class="intro">
-      <p class="label">WebGPU 3D viewer</p>
-      <h1>Откройте 3D-модель прямо в браузере.</h1>
-      <p>Небольшая статическая демонстрация OBYOM. Никаких установок и сборки на стороне сайта — готовый build библиотеки лежит рядом с этой страницей.</p>
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">WebGPU 3D viewer</p>
+      <h1 id="hero-title">Explore 3D models directly in your browser.</h1>
+      <p class="hero-copy">A lightweight WebGPU viewer for interactive model previews — no CAD software or installation required.</p>
+      <a class="button button-primary" href="#viewer-title">Try the viewer <span aria-hidden="true">↓</span></a>
     </section>
 
     <section class="viewer-card" aria-labelledby="viewer-title">
       <div class="viewer-heading">
         <div>
-          <p class="label">Demo</p>
+          <p class="eyebrow">Live demo</p>
           <h2 id="viewer-title">OBYOM logo</h2>
         </div>
-        <p id="status" class="status" role="status" aria-live="polite">Проверяем поддержку WebGPU…</p>
+        <p id="status" class="status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span>Checking WebGPU support…</p>
       </div>
       <div class="canvas-frame">
-        <canvas id="viewer" aria-label="Интерактивная 3D-модель OBYOM"></canvas>
-        <p id="message" class="message">Загрузка просмотрщика…</p>
+        <canvas id="viewer" aria-label="Interactive 3D model of the OBYOM logo"></canvas>
+        <p id="message" class="message">Loading viewer…</p>
       </div>
-      <p class="hint">Используйте мышь или касание, чтобы вращать модель.</p>
+      <p class="hint"><span aria-hidden="true">↔</span> Drag to rotate the model. Touch gestures are supported.</p>
     </section>
 
-    <section class="details">
-      <div><strong>Что внутри</strong><span>Обычные HTML, CSS и JavaScript</span></div>
-      <div><strong>Запуск</strong><span>Раздайте эту директорию любым static web server</span></div>
-      <div><strong>Требование</strong><span>Браузер с WebGPU и secure context</span></div>
+    <section class="feature-grid" aria-label="Viewer features">
+      <div class="feature">
+        <span class="feature-index" aria-hidden="true">01</span>
+        <strong>Runs in the browser</strong>
+        <span>No installation or CAD application required.</span>
+      </div>
+      <div class="feature">
+        <span class="feature-index" aria-hidden="true">02</span>
+        <strong>Powered by WebGPU</strong>
+        <span>Modern GPU rendering for interactive previews.</span>
+      </div>
+      <div class="feature">
+        <span class="feature-index" aria-hidden="true">03</span>
+        <strong>Simple to embed</strong>
+        <span>A small viewer core built for the web.</span>
+      </div>
     </section>
 
-    <footer>Готовый build библиотеки: <code>bundle.js</code> · модель: <code>assets/3dmodels/stl/OBYOM_LOGO.stl</code></footer>
+    <footer>
+      <span>OBYOM WebGPU viewer</span>
+      <span>Model: <code>OBYOM_LOGO.stl</code></span>
+    </footer>
   </main>
   <script src="script.js"></script>
 </body>
