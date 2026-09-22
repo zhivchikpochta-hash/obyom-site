@@ -77,6 +77,11 @@ h1 { max-width: 780px; margin-bottom: var(--space-5); font-size: clamp(42px, 7vw
 h2 { margin-bottom: 0; font-size: clamp(26px, 4vw, 32px); line-height: 1.1; letter-spacing: -.035em; }
 .status { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--muted); font-size: 14px; text-align: right; }
 .status-dot { width: 8px; height: 8px; flex: 0 0 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(242, 106, 33, .14); }
+.status-dot--ready.status-dot--pulse { animation: status-dot-pulse .5s ease-in-out; }
+@keyframes status-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(242, 106, 33, .14); filter: brightness(1); }
+  50% { box-shadow: 0 0 0 5px rgba(242, 106, 33, .2), 0 0 18px 7px rgba(242, 106, 33, .8); filter: brightness(1.8); }
+}
 .canvas-frame { position: relative; width: min(100%, 620px); aspect-ratio: 1; margin: 0 auto; overflow: hidden; border: 1px solid #252c37; border-radius: 10px; background: radial-gradient(circle at 50% 42%, #202832 0%, #0c1016 100%); }
 canvas { display: block; width: 100%; height: 100%; aspect-ratio: 1; }
 .message { position: absolute; inset: 50% 20px auto; transform: translateY(-50%); margin: 0; color: #f4f6f8; font-weight: 600; text-align: center; }
