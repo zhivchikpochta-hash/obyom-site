@@ -49,33 +49,50 @@ jobs:
         working-directory: obyom-library
         run: npm run build
 
+      - name: Read library revision
+        id: library-revision
+        working-directory: obyom-library
+        run: |
+          sha="$(git rev-parse HEAD)"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
+
       - name: Sync runtime files
-        run: ./scripts/sync-obyom-runtime.sh obyom-library/dist
+        run: ./scripts/sync-obyom-runtime.sh obyom-library/dist "${{ steps.library-revision.outputs.short_sha }}"
 
       - name: Apply site runtime compatibility patches
+        env:
+          BUNDLE_PATH: bundle-${{ steps.library-revision.outputs.short_sha }}.js
+          SHADER_PATH: basic-${{ steps.library-revision.outputs.short_sha }}.wgsl
+          MODEL_PATH: OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl
         run: ./scripts/patch-obyom-runtime.sh
+
+      - name: Update runtime script filename
+        env:
+          BUNDLE_NAME: bundle-${{ steps.library-revision.outputs.short_sha }}.js
+        run: python3 -c "from pathlib import Path; p=Path('script.js'); s=p.read_text(); import re; s=re.sub(r\"script\\.src = 'bundle-[^']+\\.js'\", \"script.src = '$BUNDLE_NAME'\", s); s=s.replace(\"script.src = 'bundle.js'\", \"script.src = '$BUNDLE_NAME'\"); p.write_text(s)"
 
       - name: Verify runtime files and paths
         run: |
-          test -s bundle.js
-          test -s shaders/webgpu/basic.wgsl
-          test -s assets/3dmodels/stl/OBYOM_LOGO.stl
+          test -s "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
+          test -s "shaders/webgpu/basic-${{ steps.library-revision.outputs.short_sha }}.wgsl"
+          test -s "assets/3dmodels/stl/OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl"
 
-          if grep -qE "['\"]/(shaders|assets)/" bundle.js; then
+          if grep -qE "['\"]/(shaders|assets)/" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"; then
             echo "Found a root-absolute runtime asset path in bundle.js"
-            grep -oE "['\"]/(shaders|assets)/[^'\"]+" bundle.js || true
+            grep -oE "['\"]/(shaders|assets)/[^'\"]+" "bundle-${{ steps.library-revision.outputs.short_sha }}.js" || true
             exit 1
           fi
 
-          grep -q "loadShader('shaders/webgpu/basic.wgsl')" bundle.js
-          grep -q "viewer.load('assets/3dmodels/stl/OBYOM_LOGO.stl')" bundle.js
+          grep -q "loadShader('shaders/webgpu/basic-${{ steps.library-revision.outputs.short_sha }}.wgsl')" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
+          grep -q "viewer.load('assets/3dmodels/stl/OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl')" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
 
       - name: Commit and push changed runtime
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add bundle.js shaders/webgpu/basic.wgsl assets/3dmodels/stl/OBYOM_LOGO.stl
+          git add -A bundle.js bundle-*.js script.js shaders/webgpu/basic.wgsl shaders/webgpu/basic-*.wgsl assets/3dmodels/stl/OBYOM_LOGO.stl assets/3dmodels/stl/OBYOM_LOGO-*.stl
 
           if git diff --cached --quiet; then
             echo "No runtime changes detected"

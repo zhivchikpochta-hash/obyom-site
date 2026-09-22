@@ -4,13 +4,16 @@ set -euo pipefail
 python3 - <<'PY'
 from pathlib import Path
 import re
+import os
 
-path = Path("bundle.js")
+path = Path(os.environ["BUNDLE_PATH"])
 text = path.read_text()
 
 replacements = {
-    "loadShader('/shaders/webgpu/basic.wgsl')": "loadShader('shaders/webgpu/basic.wgsl')",
-    "viewer.load('/assets/3dmodels/stl/OBYOM_LOGO.stl')": "viewer.load('assets/3dmodels/stl/OBYOM_LOGO.stl')",
+    "loadShader('/shaders/webgpu/basic.wgsl')": f"loadShader('shaders/webgpu/{os.environ['SHADER_PATH']}')",
+    "viewer.load('/assets/3dmodels/stl/OBYOM_LOGO.stl')": f"viewer.load('assets/3dmodels/stl/{os.environ['MODEL_PATH']}')",
+    "loadShader('shaders/webgpu/basic.wgsl')": f"loadShader('shaders/webgpu/{os.environ['SHADER_PATH']}')",
+    "viewer.load('assets/3dmodels/stl/OBYOM_LOGO.stl')": f"viewer.load('assets/3dmodels/stl/{os.environ['MODEL_PATH']}')",
     "background-color: #b5b0b0;": "background-color: #181818;",
 }
 
