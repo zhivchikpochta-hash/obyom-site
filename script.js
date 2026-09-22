@@ -2,6 +2,20 @@
   var status = document.getElementById('status');
   var message = document.getElementById('message');
 
+  function scheduleReadyPulse(dot) {
+    var delay = 1000 + Math.random() * 2000;
+    window.setTimeout(function () {
+      if (!dot.isConnected || !dot.classList.contains('status-dot--ready')) return;
+      dot.classList.remove('status-dot--pulse');
+      void dot.offsetWidth;
+      dot.classList.add('status-dot--pulse');
+      window.setTimeout(function () {
+        dot.classList.remove('status-dot--pulse');
+        scheduleReadyPulse(dot);
+      }, 500);
+    }, delay);
+  }
+
   function setStatus(text, state) {
     status.textContent = '';
     var dot = document.createElement('span');
@@ -9,6 +23,7 @@
     dot.setAttribute('aria-hidden', 'true');
     status.appendChild(dot);
     status.appendChild(document.createTextNode(text));
+    if (state === 'ready') scheduleReadyPulse(dot);
   }
 
   if (!navigator.gpu) {
