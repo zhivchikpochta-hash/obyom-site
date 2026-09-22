@@ -92,11 +92,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add -A --ignore-missing -- \
-            bundle.js 'bundle-*.js' \
-            script.js \
-            shaders/webgpu/basic.wgsl 'shaders/webgpu/basic-*.wgsl' \
-            assets/3dmodels/stl/OBYOM_LOGO.stl 'assets/3dmodels/stl/OBYOM_LOGO-*.stl'
+          # The sync step intentionally removes legacy filenames, so an explicit
+          # pathspec such as bundle.js fails once that file no longer exists.
+          # The checkout is clean and the workflow owns the complete generated
+          # diff, therefore stage the working tree and reject unexpected paths.
+          git add -A -- .
+
+          unexpected_paths="$(git diff --cached --name-only | grep -Ev '^(script\.js|bundle(-[^/]+)?\.js|shaders/webgpu/basic(-[^/]+)?\.wgsl|assets/3dmodels/stl/OBYOM_LOGO(-[^/]+)?\.stl)$' || true)"
+          if [[ -n "$unexpected_paths" ]]; then
+            echo "Unexpected staged paths:" >&2
+            printf '%s\n' "$unexpected_paths" >&2
+            exit 1
+          fi
 
           if git diff --cached --quiet; then
             echo "No runtime changes detected"
