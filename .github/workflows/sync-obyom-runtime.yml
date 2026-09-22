@@ -92,10 +92,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # The sync step intentionally removes legacy filenames, so an explicit
-          # pathspec such as bundle.js fails once that file no longer exists.
-          # The checkout is clean and the workflow owns the complete generated
-          # diff, therefore stage the working tree and reject unexpected paths.
+          # The library checkout is only a build input and must never become a
+          # nested repository entry in obyom-site.
+          rm -rf obyom-library
+
+          # The sync step intentionally removes legacy filenames. Stage the
+          # remaining site diff, then reject any unexpected tracked path.
           git add -A -- .
 
           unexpected_paths="$(git diff --cached --name-only | grep -Ev '^(script\.js|bundle(-[^/]+)?\.js|shaders/webgpu/basic(-[^/]+)?\.wgsl|assets/3dmodels/stl/OBYOM_LOGO(-[^/]+)?\.stl)$' || true)"
