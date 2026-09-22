@@ -40,8 +40,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: ${{ runner.temp }}/obyom-library/package-lock.json
+          # The library is cloned outside the site checkout. setup-node's
+          # npm cache resolver cannot resolve a cache dependency path outside
+          # the workspace, so keep dependency caching disabled here.
 
       - name: Install library dependencies
         working-directory: ${{ runner.temp }}/obyom-library
