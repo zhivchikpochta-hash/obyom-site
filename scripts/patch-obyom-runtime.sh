@@ -36,12 +36,14 @@ responsive_canvas = r"""canvas {\\n  width: 100%;\\n  height: 100%;\\n  max-widt
 # The library bundle contains CSS serialized inside an eval string, so the
 # literal newline escape sequence is part of the JavaScript source.
 canvas_pattern = re.compile(
-    r"canvas \{\\+n  width: 700px;\\+n  height: 700px;\\+n"
+    r"canvas \{\\+n"
+    r"(?:  [^;{}]+;\\+n)*"
+    r"  width: 700px;\\+n  height: 700px;\\+n"
     r"  display: block;\\+n  z-index: 1;\\+n"
-    r"  background-color: #181818;\\+n\}"
+    r"  background-color: #[0-9a-fA-F]{6};\\+n\}"
 )
 text, count = canvas_pattern.subn(lambda _match: responsive_canvas, text)
-if count == 0 and "canvas {\\\\n  width: 100%;" not in text:
+if count == 0 and not re.search(r"canvas \{\\+n(?:  [^;{}]+;\\+n)*  width: 100%;", text):
     raise SystemExit("Could not find a supported canvas rule in bundle.js")
 
 path.write_text(text)
