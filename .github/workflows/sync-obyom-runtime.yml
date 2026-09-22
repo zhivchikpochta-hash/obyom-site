@@ -1,0 +1,104 @@
+name: Sync OBYOM runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      library_ref:
+        description: "OBYOM library ref to build"
+        required: true
+        default: "master"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-obyom-runtime
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Check out OBYOM library from GitFlic
+        env:
+          LIBRARY_REF: ${{ inputs.library_ref }}
+        run: |
+          git clone --depth 1 --branch "$LIBRARY_REF" \
+            https://gitflic.ru/project/3axap777/obyom.git obyom-library
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: obyom-library/package-lock.json
+
+      - name: Install library dependencies
+        working-directory: obyom-library
+        run: npm ci
+
+      - name: Build OBYOM library
+        working-directory: obyom-library
+        run: npm run build
+
+      - name: Read library revision
+        id: library-revision
+        working-directory: obyom-library
+        run: |
+          sha="$(git rev-parse HEAD)"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync runtime files
+        run: ./scripts/sync-obyom-runtime.sh obyom-library/dist "${{ steps.library-revision.outputs.short_sha }}"
+
+      - name: Apply site runtime compatibility patches
+        env:
+          BUNDLE_PATH: bundle-${{ steps.library-revision.outputs.short_sha }}.js
+          SHADER_PATH: basic-${{ steps.library-revision.outputs.short_sha }}.wgsl
+          MODEL_PATH: OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl
+        run: ./scripts/patch-obyom-runtime.sh
+
+      - name: Update runtime script filename
+        env:
+          BUNDLE_NAME: bundle-${{ steps.library-revision.outputs.short_sha }}.js
+        run: python3 -c "from pathlib import Path; p=Path('script.js'); s=p.read_text(); import re; s=re.sub(r\"script\\.src = 'bundle-[^']+\\.js'\", \"script.src = '$BUNDLE_NAME'\", s); s=s.replace(\"script.src = 'bundle.js'\", \"script.src = '$BUNDLE_NAME'\"); p.write_text(s)"
+
+      - name: Verify runtime files and paths
+        run: |
+          test -s "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
+          test -s "shaders/webgpu/basic-${{ steps.library-revision.outputs.short_sha }}.wgsl"
+          test -s "assets/3dmodels/stl/OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl"
+
+          if grep -qE "['\"]/(shaders|assets)/" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"; then
+            echo "Found a root-absolute runtime asset path in bundle.js"
+            grep -oE "['\"]/(shaders|assets)/[^'\"]+" "bundle-${{ steps.library-revision.outputs.short_sha }}.js" || true
+            exit 1
+          fi
+
+          grep -q "loadShader('shaders/webgpu/basic-${{ steps.library-revision.outputs.short_sha }}.wgsl')" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
+          grep -q "viewer.load('assets/3dmodels/stl/OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl')" "bundle-${{ steps.library-revision.outputs.short_sha }}.js"
+
+      - name: Commit and push changed runtime
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A bundle.js bundle-*.js script.js shaders/webgpu/basic.wgsl shaders/webgpu/basic-*.wgsl assets/3dmodels/stl/OBYOM_LOGO.stl assets/3dmodels/stl/OBYOM_LOGO-*.stl
+
+          if git diff --cached --quiet; then
+            echo "No runtime changes detected"
+            exit 0
+          fi
+
+          library_sha="$(git -C obyom-library rev-parse HEAD)"
+          git commit -m "chore: sync OBYOM runtime ${library_sha:0:7}"
+          git push origin main
