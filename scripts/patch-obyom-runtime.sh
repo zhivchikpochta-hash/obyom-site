@@ -20,17 +20,29 @@ replacements = {
 for old, new in replacements.items():
     text = text.replace(old, new)
 
+text = re.sub(
+    r"loadShader\(['\"](?:/)?shaders/webgpu/basic(?:-[^'\"]+)?\.wgsl['\"]\)",
+    f"loadShader('shaders/webgpu/{os.environ['SHADER_PATH']}')",
+    text,
+)
+text = re.sub(
+    r"viewer\.load\(['\"](?:/)?assets/3dmodels/stl/OBYOM_LOGO(?:-[^'\"]+)?\.stl['\"]\)",
+    f"viewer.load('assets/3dmodels/stl/{os.environ['MODEL_PATH']}')",
+    text,
+)
+
 responsive_canvas = r"""canvas {\\n  width: 100%;\\n  height: 100%;\\n  max-width: 100%;\\n  max-height: 100%;\\n  display: block;\\n  z-index: 1;\\n  background-color: #181818;\\n}"""
 
 # The library bundle contains CSS serialized inside an eval string, so the
 # literal newline escape sequence is part of the JavaScript source.
-text, count = re.subn(
-    r"canvas \{\\\\n  width: 700px;\\\\n  height: 700px;\\\\n  display: block;\\\\n  z-index: 1;\\\\n  background-color: #181818;\\\\n\}",
-    lambda _match: responsive_canvas,
-    text,
+canvas_pattern = re.compile(
+    r"canvas \{\\+n  width: 700px;\\+n  height: 700px;\\+n"
+    r"  display: block;\\+n  z-index: 1;\\+n"
+    r"  background-color: #181818;\\+n\}"
 )
-if count == 0:
-    raise SystemExit("Could not find the fixed-size canvas rule in bundle.js")
+text, count = canvas_pattern.subn(lambda _match: responsive_canvas, text)
+if count == 0 and "canvas {\\\\n  width: 100%;" not in text:
+    raise SystemExit("Could not find a supported canvas rule in bundle.js")
 
 path.write_text(text)
 PY
