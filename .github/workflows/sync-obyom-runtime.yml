@@ -112,6 +112,6 @@ jobs:
             exit 0
           fi
 
-          library_sha="$(git -C obyom-library rev-parse HEAD)"
+          library_sha="${{ steps.library-revision.outputs.sha }}"
           git commit -m "chore: sync OBYOM runtime ${library_sha:0:7}"
           git push origin main
