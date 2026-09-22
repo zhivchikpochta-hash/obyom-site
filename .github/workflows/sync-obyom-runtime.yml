@@ -8,6 +8,9 @@ on:
         required: true
         default: "master"
         type: string
+  repository_dispatch:
+    types:
+      - obyom-master-updated
 
 permissions:
   contents: write
@@ -19,6 +22,8 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      LIBRARY_REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.library_ref || inputs.library_ref || 'master' }}
 
     steps:
       - name: Check out site
@@ -29,7 +34,6 @@ jobs:
 
       - name: Check out OBYOM library from GitFlic
         env:
-          LIBRARY_REF: ${{ inputs.library_ref }}
           LIBRARY_DIR: ${{ runner.temp }}/obyom-library
         run: |
           rm -rf "$LIBRARY_DIR"
