@@ -20,13 +20,13 @@ replacements = {
 for old, new in replacements.items():
     text = text.replace(old, new)
 
-responsive_canvas = """canvas {\\n  width: 100%;\\n  height: 100%;\\n  max-width: 100%;\\n  max-height: 100%;\\n  display: block;\\n  z-index: 1;\\n  background-color: #181818;\\n}"""
+responsive_canvas = r"""canvas {\\n  width: 100%;\\n  height: 100%;\\n  max-width: 100%;\\n  max-height: 100%;\\n  display: block;\\n  z-index: 1;\\n  background-color: #181818;\\n}"""
 
 # The library bundle contains CSS serialized inside an eval string, so the
 # literal newline escape sequence is part of the JavaScript source.
 text, count = re.subn(
     r"canvas \{\\\\n  width: 700px;\\\\n  height: 700px;\\\\n  display: block;\\\\n  z-index: 1;\\\\n  background-color: #181818;\\\\n\}",
-    responsive_canvas,
+    lambda _match: responsive_canvas,
     text,
 )
 if count == 0:
