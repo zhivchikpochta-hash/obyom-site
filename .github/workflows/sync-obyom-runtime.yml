@@ -127,8 +127,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # The library is outside the site checkout. Only the intended site
-          # runtime files are staged; no broad add can capture build inputs.
+          # Stage the generated runtime allowlist, including deletions of old
+          # cache-busted files. The sync script has already removed all stale
+          # versions from the working tree.
           git add -A -- \
             script.js \
             bundle-*.js \
