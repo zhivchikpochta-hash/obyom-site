@@ -34,7 +34,7 @@
 
   setStatus('Loading viewer…', 'loading');
   var script = document.createElement('script');
-  script.src = 'bundle-3bf2b71d9b27.js';
+  script.src = 'bundle-47173defdc07.js';
   script.onload = function () {
     setStatus('Viewer ready', 'ready');
     message.remove();
