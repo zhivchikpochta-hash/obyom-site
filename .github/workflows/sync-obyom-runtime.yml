@@ -1,10 +1,10 @@
-name: Sync OBYOM runtime
+name: Build site with OBYOM from GitFlic
 
 on:
   workflow_dispatch:
     inputs:
       library_ref:
-        description: "OBYOM library ref to build"
+        description: "OBYOM GitFlic ref to install"
         required: true
         default: "master"
         type: string
@@ -16,11 +16,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-obyom-runtime
+  group: build-site-with-obyom
   cancel-in-progress: false
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
     env:
       LIBRARY_REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.library_ref || inputs.library_ref || 'master' }}
@@ -32,114 +32,106 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Check out OBYOM library from GitFlic
-        env:
-          LIBRARY_DIR: ${{ runner.temp }}/obyom-library
-        run: |
-          rm -rf "$LIBRARY_DIR"
-          git clone --depth 1 --branch "$LIBRARY_REF" \
-            https://gitflic.ru/project/3axap777/obyom.git "$LIBRARY_DIR"
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # The library is cloned outside the site checkout. setup-node's
-          # npm cache resolver cannot resolve a cache dependency path outside
-          # the workspace, so keep dependency caching disabled here.
 
-      - name: Install library dependencies
-        working-directory: ${{ runner.temp }}/obyom-library
-        run: npm ci
-
-      - name: Build OBYOM library
-        working-directory: ${{ runner.temp }}/obyom-library
-        run: npm run build
-
-      - name: Read library revision
-        id: library-revision
-        working-directory: ${{ runner.temp }}/obyom-library
+      - name: Set OBYOM GitFlic dependency ref
         run: |
-          sha="$(git rev-parse HEAD)"
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = 'package.json';
+          const packageJson = JSON.parse(fs.readFileSync(path, 'utf8'));
+          packageJson.dependencies.obyom = `git+https://gitflic.ru/project/3axap777/obyom.git#${process.env.LIBRARY_REF}`;
+          fs.writeFileSync(path, `${JSON.stringify(packageJson, null, 2)}\n`);
+          NODE
+
+      - name: Install site dependencies from GitFlic
+        run: npm install
+
+      - name: Read installed OBYOM revision
+        id: library-revision
+        run: |
+          resolved="$(node -p "require('./package-lock.json').packages['node_modules/obyom'].resolved")"
+          sha="${resolved##*#}"
+          if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Could not determine installed OBYOM commit: $resolved" >&2
+            exit 1
+          fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
 
-      - name: Sync runtime files
+      - name: Build site
+        run: npm run build
+
+      - name: Apply cache-busted runtime names
         env:
-          LIBRARY_DIST: ${{ runner.temp }}/obyom-library/dist
           RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
-        run: ./scripts/sync-obyom-runtime.sh "$LIBRARY_DIST" "$RUNTIME_VERSION"
-
-      - name: Apply site runtime compatibility patches
-        env:
-          BUNDLE_PATH: bundle-${{ steps.library-revision.outputs.short_sha }}.js
-          SHADER_PATH: basic-${{ steps.library-revision.outputs.short_sha }}.wgsl
-          MODEL_PATH: OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl
-        run: ./scripts/patch-obyom-runtime.sh
-
-      - name: Update runtime script filename
-        env:
-          BUNDLE_NAME: bundle-${{ steps.library-revision.outputs.short_sha }}.js
         run: |
+          bundle_name="site-${RUNTIME_VERSION}.js"
+          shader_name="basic-${RUNTIME_VERSION}.wgsl"
+          model_name="OBYOM_LOGO-${RUNTIME_VERSION}.stl"
+          mv site.js "$bundle_name"
+          mv shaders/webgpu/basic.wgsl "shaders/webgpu/$shader_name"
+          mv assets/3dmodels/stl/OBYOM_LOGO.stl "assets/3dmodels/stl/$model_name"
           python3 - <<'PY'
           from pathlib import Path
           import os
-          import re
-
-          path = Path("script.js")
+          version = os.environ['RUNTIME_VERSION']
+          path = Path(f'site-{version}.js')
           text = path.read_text()
-          bundle_name = os.environ["BUNDLE_NAME"]
-          text, count = re.subn(
-              r"script\.src = 'bundle(?:-[^']+)?\.js'",
-              f"script.src = '{bundle_name}'",
-              text,
-          )
+          text = text.replace('/shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
+          text = text.replace('shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
+          text = text.replace('/assets/3dmodels/stl/OBYOM_LOGO.stl', f'assets/3dmodels/stl/OBYOM_LOGO-{version}.stl')
+          text = text.replace('assets/3dmodels/stl/OBYOM_LOGO.stl', f'assets/3dmodels/stl/OBYOM_LOGO-{version}.stl')
+          path.write_text(text)
+          PY
+          find . -maxdepth 1 -type f -name 'site-*.js' ! -name "$bundle_name" -delete
+          find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' ! -name "$shader_name" -delete
+          find assets/3dmodels/stl -maxdepth 1 -type f -name 'OBYOM_LOGO-*.stl' ! -name "$model_name" -delete
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+          path = Path('index.html')
+          text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="site-{os.environ["RUNTIME_VERSION"]}.js"></script>', path.read_text())
           if count != 1:
-              raise SystemExit(f"Expected exactly one bundle reference, found {count}")
+              raise SystemExit(f'Expected one site script tag, found {count}')
           path.write_text(text)
           PY
 
-      - name: Verify runtime files and paths
+      - name: Verify real library integration
         env:
-          BUNDLE_PATH: bundle-${{ steps.library-revision.outputs.short_sha }}.js
-          SHADER_PATH: basic-${{ steps.library-revision.outputs.short_sha }}.wgsl
-          MODEL_PATH: OBYOM_LOGO-${{ steps.library-revision.outputs.short_sha }}.stl
+          RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
         run: |
-          test -s "$BUNDLE_PATH"
-          test -s "shaders/webgpu/$SHADER_PATH"
-          test -s "assets/3dmodels/stl/$MODEL_PATH"
-          node --check "$BUNDLE_PATH"
+          test -s "site-${RUNTIME_VERSION}.js"
+          test -s "shaders/webgpu/basic-${RUNTIME_VERSION}.wgsl"
+          test -s "assets/3dmodels/stl/OBYOM_LOGO-${RUNTIME_VERSION}.stl"
+          node --check "site-${RUNTIME_VERSION}.js"
+          grep -Fq 'new OBYOM' "site-${RUNTIME_VERSION}.js"
+          grep -Fq "OBYOM_LOGO-${RUNTIME_VERSION}.stl" "site-${RUNTIME_VERSION}.js"
+          grep -Fq "script src=\"site-${RUNTIME_VERSION}.js\"" index.html
 
-          if grep -qE "['\"]/(shaders|assets)/" "$BUNDLE_PATH"; then
-            echo "Found a root-absolute runtime asset path in $BUNDLE_PATH"
-            grep -oE "['\"]/(shaders|assets)/[^'\"]+" "$BUNDLE_PATH" || true
-            exit 1
-          fi
+      - name: Remove obsolete runtime artifacts
+        run: |
+          rm -f script.js bundle.js site.js shaders/webgpu/basic.wgsl assets/3dmodels/stl/OBYOM_LOGO.stl
+          find . -maxdepth 1 -type f -name 'bundle-*.js' -delete
+          test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 1
+          test "$(find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' | wc -l)" -eq 1
+          test "$(find assets/3dmodels/stl -maxdepth 1 -type f -name 'OBYOM_LOGO-*.stl' | wc -l)" -eq 1
 
-          grep -Fq "loadShader('shaders/webgpu/$SHADER_PATH')" "$BUNDLE_PATH"
-          grep -Fq "viewer.load('assets/3dmodels/stl/$MODEL_PATH')" "$BUNDLE_PATH"
-          grep -Fq "script.src = '$BUNDLE_PATH'" script.js
-
-      - name: Commit and push changed runtime
+      - name: Commit and push built site
         env:
-          LIBRARY_SHA: ${{ steps.library-revision.outputs.sha }}
+          LIBRARY_REF: ${{ env.LIBRARY_REF }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # Stage the generated runtime allowlist, including deletions of old
-          # cache-busted files. The sync script has already removed all stale
-          # versions from the working tree.
-          git add -A -- \
-            script.js \
-            bundle-*.js \
-            shaders/webgpu/basic-*.wgsl \
-            assets/3dmodels/stl/OBYOM_LOGO-*.stl
+          git add -A -- .
 
           if git diff --cached --quiet; then
-            echo "No runtime changes detected"
+            echo "No site changes detected"
             exit 0
           fi
 
-          git commit -m "chore: sync OBYOM runtime ${LIBRARY_SHA:0:7}"
+          git commit -m "chore: build site with OBYOM ${LIBRARY_REF}"
           git push origin main
