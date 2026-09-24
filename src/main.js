@@ -6,7 +6,9 @@ const options = {
   params: {},
 };
 
-const modelPath = 'assets/3dmodels/stl/OBYOM_LOGO.stl';
+const modelPath = 'assets/3dmodels/stl/EDF+Rotor.stl';
+const modelLabel = 'EDF+Rotor.stl';
+const modelName = document.getElementById('model-name');
 const status = document.getElementById('status');
 const message = document.getElementById('message');
 const configOutput = document.getElementById('viewer-config');
@@ -35,6 +37,7 @@ function setStatus(text, state) {
 }
 
 function showConfig() {
+  modelName.textContent = modelLabel;
   configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
 }
 
