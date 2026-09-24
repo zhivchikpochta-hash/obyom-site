@@ -71,10 +71,8 @@ jobs:
         run: |
           bundle_name="site-${RUNTIME_VERSION}.js"
           shader_name="basic-${RUNTIME_VERSION}.wgsl"
-          model_name="OBYOM_LOGO-${RUNTIME_VERSION}.stl"
           mv site.js "$bundle_name"
           mv shaders/webgpu/basic.wgsl "shaders/webgpu/$shader_name"
-          mv assets/3dmodels/stl/OBYOM_LOGO.stl "assets/3dmodels/stl/$model_name"
           python3 - <<'PY'
           from pathlib import Path
           import os
@@ -83,13 +81,10 @@ jobs:
           text = path.read_text()
           text = text.replace('/shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
           text = text.replace('shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
-          text = text.replace('/assets/3dmodels/stl/OBYOM_LOGO.stl', f'assets/3dmodels/stl/OBYOM_LOGO-{version}.stl')
-          text = text.replace('assets/3dmodels/stl/OBYOM_LOGO.stl', f'assets/3dmodels/stl/OBYOM_LOGO-{version}.stl')
           path.write_text(text)
           PY
           find . -maxdepth 1 -type f -name 'site-*.js' ! -name "$bundle_name" -delete
           find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' ! -name "$shader_name" -delete
-          find assets/3dmodels/stl -maxdepth 1 -type f -name 'OBYOM_LOGO-*.stl' ! -name "$model_name" -delete
           python3 - <<'PY'
           from pathlib import Path
           import os, re
@@ -106,19 +101,18 @@ jobs:
         run: |
           test -s "site-${RUNTIME_VERSION}.js"
           test -s "shaders/webgpu/basic-${RUNTIME_VERSION}.wgsl"
-          test -s "assets/3dmodels/stl/OBYOM_LOGO-${RUNTIME_VERSION}.stl"
+          test -s "assets/3dmodels/stl/EDF+Rotor.stl"
           node --check "site-${RUNTIME_VERSION}.js"
           grep -Fq 'new OBYOM' "site-${RUNTIME_VERSION}.js"
-          grep -Fq "OBYOM_LOGO-${RUNTIME_VERSION}.stl" "site-${RUNTIME_VERSION}.js"
+          grep -Fq 'assets/3dmodels/stl/EDF+Rotor.stl' "site-${RUNTIME_VERSION}.js"
           grep -Fq "script src=\"site-${RUNTIME_VERSION}.js\"" index.html
 
       - name: Remove obsolete runtime artifacts
         run: |
-          rm -f script.js bundle.js site.js shaders/webgpu/basic.wgsl assets/3dmodels/stl/OBYOM_LOGO.stl
+          rm -f script.js bundle.js site.js shaders/webgpu/basic.wgsl
           find . -maxdepth 1 -type f -name 'bundle-*.js' -delete
           test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 1
           test "$(find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' | wc -l)" -eq 1
-          test "$(find assets/3dmodels/stl -maxdepth 1 -type f -name 'OBYOM_LOGO-*.stl' | wc -l)" -eq 1
 
       - name: Commit and push built site
         env:
