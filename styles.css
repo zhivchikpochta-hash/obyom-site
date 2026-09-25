@@ -109,14 +109,7 @@ footer { display: flex; justify-content: space-between; gap: var(--space-5); pad
 .browser-version-list span { color: var(--muted); font-size: 13px; line-height: 1.45; }
 .browser-disclaimer { max-width: 62ch; margin: var(--space-5) 0 0; padding-top: var(--space-4); border-top: 1px solid var(--line); color: var(--subtle); font-size: 12px; line-height: 1.5; }
 .browser-disclaimer a { color: var(--accent-bright); }
-.weekly-report { margin: var(--space-8) 0 var(--space-7); padding: var(--space-7) 4px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.weekly-report-heading { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); }
-.weekly-report-heading h2 { margin: 0; }
-.weekly-report-heading a { color: var(--accent-bright); font-size: 13px; font-weight: 700; text-decoration: none; }
-.weekly-report-heading a:hover { text-decoration: underline; }
-.weekly-report-preview { margin: var(--space-6) 0 0; }
-.weekly-report-preview img { display: block; width: 100%; max-height: 560px; object-fit: cover; object-position: top; border: 1px solid var(--line); border-radius: 10px; background: #0b0f14; }
-.weekly-report-preview figcaption { margin-top: var(--space-3); color: var(--subtle); font-size: 12px; }
+
 code { color: var(--muted); }
 :focus-visible { outline: 3px solid var(--accent-bright); outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
@@ -142,11 +135,7 @@ code { color: var(--muted); }
   .browser-support-copy { margin-top: 0; }
   .browser-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin-top: var(--space-6); }
   .browser-item { min-height: 88px; }
-  .weekly-report { margin: var(--space-7) 0 var(--space-6); padding: var(--space-7) 4px; }
-  .weekly-report-heading { display: grid; gap: var(--space-4); }
-  .weekly-report-heading a { margin-top: 0; }
-  .weekly-report-preview { margin-top: var(--space-5); }
-  .weekly-report-preview img { max-height: 420px; }
+
   footer { align-items: flex-start; flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-6); }
 }
 @media (max-width: 480px) {
