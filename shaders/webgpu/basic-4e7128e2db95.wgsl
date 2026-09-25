@@ -56,9 +56,8 @@ fn fragment_main(input: VertexOutput) -> @location(0) vec4<f32> {
   let halfVector = normalize(viewDir - lightDir);
   let specularPower = mix(128.0, 24.0, material.roughness);
   let highlight = pow(max(dot(normal, halfVector), 0.0), specularPower);
-  let metalTint = mix(vec3<f32>(1.0), material.baseColor, material.metallic);
-  let specularColor = mix(vec3<f32>(1.0, 0.88, 0.68), metalTint, material.metallic);
-  let diffuse = material.baseColor * light * (1.0 - material.metallic);
+  let specularColor = vec3<f32>(1.0, 0.88, 0.68);
+  let diffuse = material.baseColor * light;
   let reflected = specularColor * highlight * material.specular;
   return vec4<f32>(diffuse + reflected, 1.0);
 }
