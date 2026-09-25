@@ -24,7 +24,7 @@ struct VertexOutput {
 };
 
 @group(0) @binding(0) var<uniform> uniforms: Uniforms;
-@group(0) @binding(1) var<uniform> modelMatrix: mat4x4<f32>;
+@group(0) @binding(1) var<uniform> matrices: array<mat4x4<f32>, 2>;
 @group(0) @binding(2) var diffuseTexture: texture_2d<f32>;
 @group(0) @binding(3) var diffuseSampler: sampler;
 
@@ -37,8 +37,8 @@ const material = Material(
 
 @vertex
 fn vertex_main(vertex: VertexInput) -> VertexOutput {
-  let worldNormal = normalize((modelMatrix * vec4<f32>(vertex.normal, 0.0)).xyz);
-  let worldPosition = modelMatrix * vec4<f32>(vertex.position, 1.0);
+  let worldNormal = normalize((matrices[1] * vec4<f32>(vertex.normal, 0.0)).xyz);
+  let worldPosition = matrices[0] * vec4<f32>(vertex.position, 1.0);
   return VertexOutput(
     uniforms.viewProjection * worldPosition,
     worldNormal,
