@@ -41,7 +41,11 @@ function showConfig() {
   configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
 }
 
+let viewer = null;
+
 async function start() {
+  viewer?.destroy();
+  viewer = null;
   showConfig();
 
   if (!navigator.gpu) {
@@ -52,7 +56,7 @@ async function start() {
 
   setStatus('Loading OBYOM from GitFlic package', 'loading');
   try {
-    const viewer = new OBYOM(options);
+    viewer = new OBYOM(options);
     await viewer.start();
     await viewer.load(modelPath);
     setStatus('Viewer ready', 'ready');
