@@ -64,6 +64,11 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
 
+      - name: Verify installed OBYOM package layout
+        run: |
+          test -s node_modules/obyom/dist/package/index.js
+          test -s node_modules/obyom/dist/types/index.d.ts
+
       - name: Build site
         run: npm run build
 
@@ -72,21 +77,8 @@ jobs:
           RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
         run: |
           bundle_name="site-${RUNTIME_VERSION}.js"
-          shader_name="basic-${RUNTIME_VERSION}.wgsl"
           mv site.js "$bundle_name"
-          mv shaders/webgpu/basic.wgsl "shaders/webgpu/$shader_name"
-          python3 - <<'PY'
-          from pathlib import Path
-          import os
-          version = os.environ['RUNTIME_VERSION']
-          path = Path(f'site-{version}.js')
-          text = path.read_text()
-          text = text.replace('/shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
-          text = text.replace('shaders/webgpu/basic.wgsl', f'shaders/webgpu/basic-{version}.wgsl')
-          path.write_text(text)
-          PY
           find . -maxdepth 1 -type f -name 'site-*.js' ! -name "$bundle_name" -delete
-          find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' ! -name "$shader_name" -delete
           python3 - <<'PY'
           from pathlib import Path
           import os, re
@@ -102,7 +94,6 @@ jobs:
           RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
         run: |
           test -s "site-${RUNTIME_VERSION}.js"
-          test -s "shaders/webgpu/basic-${RUNTIME_VERSION}.wgsl"
           test -s "assets/3dmodels/stl/EDF+Rotor.stl"
           node --check "site-${RUNTIME_VERSION}.js"
           grep -Fq 'new OBYOM' "site-${RUNTIME_VERSION}.js"
@@ -111,10 +102,9 @@ jobs:
 
       - name: Remove obsolete runtime artifacts
         run: |
-          rm -f script.js bundle.js site.js shaders/webgpu/basic.wgsl
+          rm -f script.js bundle.js site.js
           find . -maxdepth 1 -type f -name 'bundle-*.js' -delete
           test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 1
-          test "$(find shaders/webgpu -maxdepth 1 -type f -name 'basic-*.wgsl' | wc -l)" -eq 1
 
       - name: Commit and push built site
         env:
