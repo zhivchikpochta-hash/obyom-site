@@ -9,6 +9,7 @@ The site is both a product presentation and a real consumer of the OBYOM package
 Open the deployed site and rotate the model directly in the browser:
 
 - **Demo:** [OBYOM WebGPU viewer](https://zhivchikpochta-hash.github.io/obyom-site/)
+- **Get Started:** [installation and integration guide](https://zhivchikpochta-hash.github.io/obyom-site/get-started.html)
 - **Library source:** [GitFlic](https://gitflic.ru/project/3axap777/obyom)
 
 WebGPU availability depends on the browser, operating system, GPU, drivers, and browser settings.
@@ -25,7 +26,7 @@ WebGPU availability depends on the browser, operating system, GPU, drivers, and 
 - Explicit WebGPU loading and error states
 - Cache-busted generated runtime files tied to the resolved OBYOM revision
 
-## Quick start
+## Local development
 
 Requirements:
 
@@ -77,6 +78,7 @@ The demo keeps the viewer instance in the site controller and calls `destroy()` 
 ```text
 .
 ├── index.html                         Landing page and viewer markup
+├── get-started.html                   Installation and integration guide
 ├── styles.css                         Site layout, theme, and responsive styles
 ├── src/main.js                        OBYOM integration and demo controller
 ├── webpack.config.js                  Site build configuration

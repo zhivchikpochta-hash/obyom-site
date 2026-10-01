@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Get started with OBYOM, a lightweight WebGPU 3D viewer for browser-based model previews.">
+  <link rel="icon" type="image/svg+xml" href="assets/obyom-logo.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Get Started — OBYOM</title>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="brand" href="." aria-label="OBYOM home">
+        <img src="assets/obyom-logo.svg" alt="">
+        <strong>OBYOM</strong>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href=".">Demo</a>
+        <a class="nav-active" href="get-started.html" aria-current="page">Get Started</a>
+        <a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <section class="docs-hero" aria-labelledby="page-title">
+      <p class="eyebrow">Documentation / 01</p>
+      <h1 id="page-title">Get OBYOM running in your project.</h1>
+      <p class="docs-lead">Install the package, mount a canvas, and load your first 3D model with a small async setup.</p>
+    </section>
+
+    <div class="docs-layout">
+      <aside class="docs-index" aria-label="On this page">
+        <span class="feature-index">ON THIS PAGE</span>
+        <a href="#requirements">Requirements</a>
+        <a href="#install">Install</a>
+        <a href="#initialize">Initialize the viewer</a>
+        <a href="#deploy">Deploy</a>
+      </aside>
+
+      <article class="guide">
+        <section class="guide-section" id="requirements">
+          <p class="step-label">01 / Requirements</p>
+          <h2>Start with a WebGPU-ready browser.</h2>
+          <p>OBYOM runs in the browser and needs WebGPU access. Use a current Chrome, Edge, Safari, or Firefox release with WebGPU enabled and a supported GPU driver.</p>
+          <ul class="check-list">
+            <li>Node.js <strong>20.9+</strong> and npm <strong>10+</strong> for the project setup</li>
+            <li>A browser with WebGPU support</li>
+            <li>An HTTP(S) origin — do not open the page directly as <code>file://</code></li>
+          </ul>
+        </section>
+
+        <section class="guide-section" id="install">
+          <p class="step-label">02 / Install</p>
+          <h2>Add the package to your application.</h2>
+          <p>From your project directory, install the public npm package:</p>
+          <pre class="code-block"><code>npm install obyom-3d</code></pre>
+          <p>OBYOM ships as an ESM package with generated TypeScript declarations and its shader code embedded in the production bundle.</p>
+        </section>
+
+        <section class="guide-section" id="initialize">
+          <p class="step-label">03 / Initialize</p>
+          <h2>Mount a viewer on a canvas.</h2>
+          <p>Add a canvas to your page. Give it dimensions through CSS or its HTML attributes:</p>
+          <pre class="code-block"><code>&lt;canvas id="viewer" width="700" height="700"&gt;&lt;/canvas&gt;</code></pre>
+          <p>Then create the viewer, start WebGPU, and load an STL asset:</p>
+          <pre class="code-block"><code>import { OBYOM } from 'obyom-3d';
+
+const obyom = new OBYOM({
+  canvas: '#viewer',
+  params: {},
+});
+
+await obyom.start();
+await obyom.load('/assets/model.stl');</code></pre>
+          <div class="callout">
+            <strong>Keep the order.</strong>
+            <span>Call <code>start()</code> before <code>load()</code>. The model path is resolved by your application, so serve the asset from the same site or a permitted URL.</span>
+          </div>
+        </section>
+
+        <section class="guide-section" id="deploy">
+          <p class="step-label">04 / Deploy</p>
+          <h2>Serve the built application over HTTP(S).</h2>
+          <p>Build your application with your usual bundler, then deploy the generated assets to your hosting provider. For a local smoke test, run a static server from the project root:</p>
+          <pre class="code-block"><code>npm run build
+python3 -m http.server 8080</code></pre>
+          <p>Open <code>http://localhost:8080</code> in a WebGPU-capable browser. In production, use HTTPS and make sure the bundled JavaScript, model files, and any static assets are available at their referenced paths.</p>
+          <a class="button button-primary docs-button" href=".">Try the live viewer <span aria-hidden="true">↗</span></a>
+        </section>
+      </article>
+    </div>
+
+    <footer>
+      <span>OBYOM WebGPU viewer</span>
+      <span><a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code ↗</a></span>
+    </footer>
+  </main>
+</body>
+</html>
