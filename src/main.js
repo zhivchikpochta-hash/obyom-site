@@ -6,7 +6,7 @@ const options = {
   params: {},
 };
 
-const modelPath = 'assets/3dmodels/stl/EDF+Rotor.stl';
+const modelPath = new URL('assets/3dmodels/stl/EDF+Rotor.stl', document.baseURI).href;
 const modelLabel = 'EDF+Rotor.stl';
 const modelName = document.getElementById('model-name');
 const status = document.getElementById('status');
@@ -44,6 +44,13 @@ function showConfig() {
 
 let viewer = null;
 
+function withTimeout(promise, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => window.setTimeout(() => reject(new Error(`${label} timed out after 15 seconds`)), 15000)),
+  ]);
+}
+
 async function start() {
   viewer?.destroy();
   viewer = null;
@@ -58,8 +65,8 @@ async function start() {
   setStatus(translate('loadingPackage'), 'loading');
   try {
     viewer = new OBYOM(options);
-    await viewer.start();
-    await viewer.load(modelPath);
+    await withTimeout(viewer.start(), 'WebGPU initialization');
+    await withTimeout(viewer.load(modelPath), 'Model loading');
     setStatus(translate('ready'), 'ready');
     message.remove();
   } catch (error) {
