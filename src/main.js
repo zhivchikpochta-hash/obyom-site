@@ -1,4 +1,4 @@
-import { OBYOM } from 'obyom';
+import { OBYOM } from 'obyom-3d';
 import './site.css';
 
 const options = {

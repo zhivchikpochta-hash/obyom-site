@@ -43,7 +43,7 @@ jobs:
           const fs = require('fs');
           const path = 'package.json';
           const packageJson = JSON.parse(fs.readFileSync(path, 'utf8'));
-          packageJson.dependencies.obyom = `git+https://gitflic.ru/project/3axap777/obyom.git#${process.env.LIBRARY_REF}`;
+          packageJson.dependencies['obyom-3d'] = `git+https://gitflic.ru/project/3axap777/obyom.git#${process.env.LIBRARY_REF}`;
           fs.writeFileSync(path, `${JSON.stringify(packageJson, null, 2)}\n`);
           NODE
 
@@ -55,7 +55,7 @@ jobs:
       - name: Read installed OBYOM revision
         id: library-revision
         run: |
-          resolved="$(node -p "require('./package-lock.json').packages['node_modules/obyom'].resolved")"
+          resolved="$(node -p "require('./package-lock.json').packages['node_modules/obyom-3d'].resolved")"
           sha="${resolved##*#}"
           if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
             echo "Could not determine installed OBYOM commit: $resolved" >&2
@@ -66,8 +66,8 @@ jobs:
 
       - name: Verify installed OBYOM package layout
         run: |
-          test -s node_modules/obyom/dist/package/index.js
-          test -s node_modules/obyom/dist/types/index.d.ts
+          test -s node_modules/obyom-3d/dist/package/index.js
+          test -s node_modules/obyom-3d/dist/types/index.d.ts
 
       - name: Build site
         run: npm run build

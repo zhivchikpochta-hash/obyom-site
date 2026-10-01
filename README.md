@@ -53,7 +53,7 @@ Then open <http://localhost:8080> in a WebGPU-capable browser.
 The site uses the public OBYOM flow:
 
 ```js
-import { OBYOM } from 'obyom';
+import { OBYOM } from 'obyom-3d';
 
 const viewer = new OBYOM({
   canvas: '#viewer',
