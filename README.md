@@ -4,6 +4,8 @@ A focused landing page and live demo for [OBYOM](https://gitflic.ru/project/3axa
 
 The site is both a product presentation and a real consumer of the OBYOM package. The viewer imports `OBYOM` from the GitFlic dependency, starts a WebGPU renderer, and loads the demo STL model from the site-owned assets.
 
+Visible site content is available in English and Russian. The browser locale is detected automatically: `ru` locales receive Russian copy, while every other locale receives English copy.
+
 ## Live demo
 
 Open the deployed site and rotate the model directly in the browser:
@@ -79,6 +81,7 @@ The demo keeps the viewer instance in the site controller and calls `destroy()` 
 .
 ├── index.html                         Landing page and viewer markup
 ├── get-started.html                   Installation and integration guide
+├── i18n.js                             Browser-locale content switching
 ├── styles.css                         Site layout, theme, and responsive styles
 ├── src/main.js                        OBYOM integration and demo controller
 ├── webpack.config.js                  Site build configuration

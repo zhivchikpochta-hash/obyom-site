@@ -12,6 +12,7 @@ const modelName = document.getElementById('model-name');
 const status = document.getElementById('status');
 const message = document.getElementById('message');
 const configOutput = document.getElementById('viewer-config');
+const translate = (key) => window.OBYOM_I18N?.t(`main.${key}`) || key;
 
 function scheduleReadyPulse(dot) {
   const delay = 1000 + Math.random() * 2000;
@@ -49,22 +50,22 @@ async function start() {
   showConfig();
 
   if (!navigator.gpu) {
-    setStatus('WebGPU unavailable', 'error');
-    message.textContent = 'Open this demo in a current browser with WebGPU enabled.';
+    setStatus(translate('unavailable'), 'error');
+    message.textContent = translate('unavailableMessage');
     return;
   }
 
-  setStatus('Loading OBYOM from GitFlic package', 'loading');
+  setStatus(translate('loadingPackage'), 'loading');
   try {
     viewer = new OBYOM(options);
     await viewer.start();
     await viewer.load(modelPath);
-    setStatus('Viewer ready', 'ready');
+    setStatus(translate('ready'), 'ready');
     message.remove();
   } catch (error) {
     console.error('Failed to initialize OBYOM viewer', error);
-    setStatus('Viewer failed to load', 'error');
-    message.textContent = 'The viewer could not be loaded. Check the browser console for details.';
+    setStatus(translate('failed'), 'error');
+    message.textContent = translate('failedMessage');
   }
 }
 
