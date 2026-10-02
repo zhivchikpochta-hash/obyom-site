@@ -29,6 +29,7 @@ function scheduleReadyPulse(dot) {
 }
 
 function setStatus(text, state) {
+  if (!status) return;
   status.textContent = '';
   const dot = document.createElement('span');
   dot.className = `status-dot status-dot--${state}`;
@@ -38,8 +39,10 @@ function setStatus(text, state) {
 }
 
 function showConfig() {
-  modelName.textContent = modelLabel;
-  configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
+  if (modelName) modelName.textContent = modelLabel;
+  if (configOutput) {
+    configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
+  }
 }
 
 let viewer = null;
@@ -52,13 +55,14 @@ function withTimeout(promise, label) {
 }
 
 async function start() {
+  if (!document.querySelector(options.canvas)) return;
   viewer?.destroy();
   viewer = null;
   showConfig();
 
   if (!navigator.gpu) {
     setStatus(translate('unavailable'), 'error');
-    message.textContent = translate('unavailableMessage');
+    if (message) message.textContent = translate('unavailableMessage');
     return;
   }
 
@@ -68,11 +72,11 @@ async function start() {
     await withTimeout(viewer.start(), 'WebGPU initialization');
     await withTimeout(viewer.load(modelPath), 'Model loading');
     setStatus(translate('ready'), 'ready');
-    message.remove();
+    message?.remove();
   } catch (error) {
     console.error('Failed to initialize OBYOM viewer', error);
     setStatus(translate('failed'), 'error');
-    message.textContent = translate('failedMessage');
+    if (message) message.textContent = translate('failedMessage');
   }
 }
 
