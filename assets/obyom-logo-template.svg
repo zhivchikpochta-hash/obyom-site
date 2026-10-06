@@ -2,7 +2,17 @@
   <circle cx="305" cy="305" r="300" fill="none" stroke-width="1" stroke="grey"/>
   <polygon points="305,5 564.81,455 45.19,455" fill="none" stroke-width="1" stroke="grey"/>
 
-  <!-- Нижняя граница нижнего сегмента: одна симметричная дуга по окружности шаблона. -->
+  <!-- Верхняя граница нижнего сегмента: симметричный прямой участок. -->
+  <path
+    id="lower-segment-top-line"
+    d="M 161 452 L 449 452"
+    fill="none"
+    stroke="#965020"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+
+  <!-- Нижняя граница нижнего сегмента: одна симметричная дуга по окружности. -->
   <path
     id="lower-segment-bottom-arc"
     d="M 54.45 470 A 300 300 0 0 0 305 605 A 300 300 0 0 0 555.55 470"
