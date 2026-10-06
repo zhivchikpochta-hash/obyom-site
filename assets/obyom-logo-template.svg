@@ -12,6 +12,17 @@
     stroke-linecap="round"
   />
 
+  <!-- Боковые наклонные участки нижнего сегмента. -->
+  <path
+    id="lower-segment-side-lines"
+    d="M 161 452 L 54.45 470 M 449 452 L 555.55 470"
+    fill="none"
+    stroke="#965020"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
   <!-- Нижняя граница нижнего сегмента: одна симметричная дуга по окружности. -->
   <path
     id="lower-segment-bottom-arc"
