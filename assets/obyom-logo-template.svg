@@ -7,7 +7,7 @@
     id="lower-segment-top-line"
     d="M 161 452 L 449 452"
     fill="none"
-    stroke="#965020"
+    stroke="#f26a21"
     stroke-width="2"
     stroke-linecap="round"
   />
@@ -17,7 +17,7 @@
     id="lower-segment-side-lines"
     d="M 161 452 L 54.45 470 M 449 452 L 555.55 470"
     fill="none"
-    stroke="#965020"
+    stroke="#f26a21"
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -28,7 +28,7 @@
     id="lower-segment-bottom-arc"
     d="M 54.45 470 A 300 300 0 0 0 305 605 A 300 300 0 0 0 555.55 470"
     fill="none"
-    stroke="#965020"
+    stroke="#f26a21"
     stroke-width="2"
     stroke-linecap="round"
   />
