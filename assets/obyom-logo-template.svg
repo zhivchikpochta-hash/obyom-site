@@ -9,7 +9,7 @@
   <path
     id="lower-segment-outline"
     d="M 165 451 L 84.20 508 A 300 300 0 0 0 305 605 A 300 300 0 0 0 525.80 508 L 445 451 L 165 451 Z"
-    fill="none"
+    fill="#f26a21"
     stroke="#f26a21"
     stroke-width="2"
     stroke-linecap="round"
