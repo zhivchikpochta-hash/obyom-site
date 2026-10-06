@@ -8,7 +8,7 @@
   <!-- Верхняя граница нижнего сегмента: симметричный прямой участок. -->
   <path
     id="lower-segment-top-line"
-    d="M 161 452 L 449 452"
+    d="M 165 451 L 445 451"
     fill="none"
     stroke="#f26a21"
     stroke-width="2"
