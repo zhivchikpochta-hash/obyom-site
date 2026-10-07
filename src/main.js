@@ -1,13 +1,14 @@
 import { OBYOM } from 'obyom-3d';
 import './site.css';
 
+const canvas = document.querySelector('[data-obyom-viewer]');
 const options = {
-  canvas: '#viewer',
+  canvas: canvas || '#viewer',
   params: {},
 };
 
-const modelPath = new URL('assets/3dmodels/stl/EDF+Rotor.stl', document.baseURI).href;
-const modelLabel = 'EDF+Rotor.stl';
+let modelPath = new URL(canvas?.dataset.modelPath || 'assets/3dmodels/stl/EDF+Rotor.stl', document.baseURI).href;
+let modelLabel = canvas?.dataset.modelLabel || 'EDF+Rotor.stl';
 const modelName = document.getElementById('model-name');
 const status = document.getElementById('status');
 const message = document.getElementById('message');
@@ -40,9 +41,8 @@ function setStatus(text, state) {
 
 function showConfig() {
   if (modelName) modelName.textContent = modelLabel;
-  if (configOutput) {
-    configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
-  }
+  if (!configOutput) return;
+  configOutput.textContent = `const viewer = new OBYOM(${JSON.stringify(options, null, 2)});\n\nawait viewer.start();\nawait viewer.load(${JSON.stringify(modelPath)});`;
 }
 
 let viewer = null;
@@ -55,7 +55,7 @@ function withTimeout(promise, label) {
 }
 
 async function start() {
-  if (!document.querySelector(options.canvas)) return;
+  if (!canvas) return;
   viewer?.destroy();
   viewer = null;
   showConfig();
@@ -79,5 +79,23 @@ async function start() {
     if (message) message.textContent = translate('failedMessage');
   }
 }
+
+async function loadModel(path, label) {
+  modelPath = new URL(path, document.baseURI).href;
+  modelLabel = label;
+  viewer?.destroy();
+  viewer = null;
+  showConfig();
+  if (message) message.textContent = translate('loading');
+  await start();
+}
+
+document.querySelectorAll('[data-model-path]').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('[data-model-path]').forEach((item) => item.removeAttribute('aria-current'));
+    button.setAttribute('aria-current', 'true');
+    void loadModel(button.dataset.modelPath, button.dataset.modelLabel || button.textContent.trim());
+  });
+});
 
 void start();

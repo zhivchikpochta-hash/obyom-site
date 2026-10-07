@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore OBYOM models directly in your browser.">
+  <link rel="icon" type="image/svg+xml" href="assets/obyom-logo.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Demo — OBYOM</title>
+</head>
+<body data-page="demo">
+  <main class="page">
+    <header class="header">
+      <a class="brand" href="." aria-label="OBYOM home"><img src="assets/obyom-logo.svg" alt=""><strong>OBYOM</strong></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-active" data-nav-demo href="demo.html" aria-current="page">Demo</a>
+        <a data-nav-guide href="get-started.html">For developers</a>
+        <a href="for-clients.html">For workshops</a>
+        <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">RU</button>
+        <a data-nav-source href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <section class="docs-hero demo-hero" aria-labelledby="demo-title">
+      <p class="eyebrow">Interactive models</p>
+      <h1 id="demo-title">See how your model can work in the browser.</h1>
+      <p class="docs-lead">Choose a model, rotate it, and explore the same kind of browser-based preview you can share with a client.</p>
+    </section>
+
+    <section class="viewer-card demo-viewer" aria-labelledby="demo-viewer-title">
+      <div class="viewer-heading">
+        <div><p class="eyebrow">Demo</p><h2 id="demo-viewer-title">Choose a model</h2></div>
+        <p id="status" class="status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span>Checking WebGPU support…</p>
+      </div>
+      <div class="model-picker" role="list" aria-label="Models">
+        <button type="button" class="model-choice" data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-current="true">OBYOM Logo</button>
+        <button type="button" class="model-choice" data-model-path="assets/3dmodels/stl/EDF+Rotor.stl" data-model-label="EDF+Rotor">EDF Rotor</button>
+      </div>
+      <div class="canvas-frame">
+        <canvas id="viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-label="Interactive 3D model preview"></canvas>
+        <p id="message" class="message">Loading viewer…</p>
+      </div>
+      <p class="hint"><span aria-hidden="true">↔</span> Drag to rotate the model. Touch gestures are supported.</p>
+      <p class="model-caption"><strong id="model-name">OBYOM Logo</strong><span>Browser-based interactive preview</span></p>
+    </section>
+
+    <section class="feature-grid" aria-label="Demo features">
+      <div class="feature"><span class="feature-index">01</span><strong>Rotate</strong><span>Inspect the form from any angle.</span></div>
+      <div class="feature"><span class="feature-index">02</span><strong>Share</strong><span>Give a client a link instead of a screenshot.</span></div>
+      <div class="feature"><span class="feature-index">03</span><strong>Approve</strong><span>Tie feedback to one exact model version.</span></div>
+    </section>
+
+    <footer><span>OBYOM browser-based 3D preview</span><span><a href="mailto:3axap777@vk.com">Discuss a pilot ↗</a></span></footer>
+  </main>
+  <script src="i18n.js"></script>
+  <script src="site-e435ae9.js"></script>
+</body>
+</html>

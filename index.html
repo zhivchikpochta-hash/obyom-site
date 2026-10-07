@@ -16,8 +16,9 @@
         <strong>OBYOM</strong>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a data-nav-demo href="#viewer-title">Demo</a>
-        <a data-nav-guide href="get-started.html">Get Started</a>
+        <a data-nav-demo href="demo.html">Demo</a>
+        <a data-nav-guide href="get-started.html">For developers</a>
+        <a href="for-clients.html">For workshops</a>
         <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">RU</button>
         <a data-nav-source href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
       </nav>
@@ -26,9 +27,9 @@
     <section class="manifesto" aria-label="OBYOM integration statement">
       <p class="manifesto-intro">Add <strong>OBYOM</strong> in your</p>
       <ul class="manifesto-list">
-        <li><span>01</span>site</li>
-        <li><span>02</span>project</li>
-        <li><span>03</span>solution</li>
+        <li><span>01</span>Site</li>
+        <li><span>02</span>Project</li>
+        <li><span>03</span>Solution</li>
       </ul>
     </section>
 
@@ -37,7 +38,7 @@
       <h1 id="hero-title">Show your 3D work to clients directly in the browser.</h1>
       <p class="hero-copy">Create interactive previews for your portfolio or send a specific model for client approval — without asking anyone to install CAD software.</p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#viewer-title">Try the live demo <span aria-hidden="true">↓</span></a>
+        <a class="button button-primary" href="demo.html">Try the demo <span aria-hidden="true">↓</span></a>
         <a class="button button-secondary" href="#pilot">Discuss a pilot <span aria-hidden="true">↘</span></a>
       </div>
     </section>
@@ -64,15 +65,15 @@
 
     <section class="viewer-card" aria-labelledby="viewer-title">
       <div class="viewer-heading">
-        <p class="eyebrow">Live demo</p>
+        <p class="eyebrow">Interactive preview</p>
         <p id="status" class="status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span>Checking WebGPU support…</p>
       </div>
       <div class="canvas-frame">
-        <canvas id="viewer" aria-label="Interactive 3D model of the OBYOM logo"></canvas>
+        <canvas id="viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/EDF+Rotor.stl" data-model-label="EDF+Rotor.stl" aria-label="Interactive 3D model preview"></canvas>
         <p id="message" class="message">Loading viewer…</p>
       </div>
       <p class="hint"><span aria-hidden="true">↔</span> Drag to rotate the model. Touch gestures are supported.</p>
-      <pre class="viewer-config"><code id="viewer-config"></code></pre>
+
     </section>
 
     <section class="feature-grid" aria-label="Viewer features">
