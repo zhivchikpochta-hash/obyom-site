@@ -5,7 +5,7 @@
     <!-- Source of truth: one lower segment. Straight top and circular arc are preserved; corner and side transitions are rebuilt as smooth geometry. -->
     <path id="base-segment" d="M 160 450 L 450 450 Q 458 450 460 458 L 438 495 Q 436 499 441 501 L 525.8 508 A 300 300 0 0 1 305 605 A 300 300 0 0 1 84.2 508 L 169 501 Q 174 499 172 495 L 150 458 Q 152 450 160 450 Z"/>
     <!-- Geometric shadow ribbons. Every point is kept inside the R=300 outer circle; no clipping is needed. -->
-    <path id="base-shadow" d="M 160 450 L 450 450 Q 458 450 460 458 L 438 495 Q 437 497 440 498 L 523 505 L 526 508 L 441 501 Q 436 499 438 495 L 460 458 Q 458 450 450 450 L 160 450 Q 152 450 150 458 L 172 495 Q 174 499 169 501 L 84.2 508 L 87.2 505 L 170 498 Q 173 497 172 495 L 150 458 Q 152 450 160 450 Z"/>
+    <path id="base-shadow" d="M 160 438 L 450 438 Q 458 438 462 446 L 438 495 Q 437 497 440 498 L 523 505 L 526 508 L 441 501 Q 436 499 438 495 L 460 458 Q 458 450 450 450 L 160 450 Q 152 450 150 458 L 172 495 Q 174 499 169 501 L 84.2 508 L 87.2 505 L 170 498 Q 173 497 172 495 L 148 446 Q 152 438 160 438 Z"/>
   </defs>
   <g fill="#1c1c1c" opacity=".48" pointer-events="none">
     <use href="#base-shadow"/>
