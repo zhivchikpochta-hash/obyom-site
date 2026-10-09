@@ -57,7 +57,7 @@ a { color: inherit; }
 .nav a, .brand, .button { transition: color .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease; }
 .nav a { padding: 10px 12px; border-radius: 6px; text-decoration: none; }
 .nav a:hover, .nav a.nav-active { background: #171c25; color: #ffffff; }
-.language-toggle { padding: 10px 8px; border: 0; border-radius: 6px; background: transparent; color: var(--accent-bright); cursor: pointer; font: inherit; font-size: 12px; font-weight: 750; letter-spacing: .08em; }
+.language-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; flex: 0 0 auto; padding: 8px 9px; border: 1px solid var(--accent); border-radius: 6px; background: #07090d; color: var(--accent-bright); cursor: pointer; font: inherit; font-size: 12px; font-weight: 750; letter-spacing: .08em; appearance: none; }
 .language-toggle:hover { background: #171c25; }
 .manifesto { display: grid; grid-template-columns: minmax(180px, .7fr) 1fr; gap: var(--space-7); align-items: start; margin: 0 var(--space-4); padding: var(--space-8) var(--space-4) var(--space-7); border-bottom: 1px solid var(--line); }
 .manifesto-intro { margin: 0; color: var(--muted); font-size: clamp(18px, 2.2vw, 24px); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; }
@@ -196,8 +196,10 @@ code { color: var(--muted); }
   .page { width: calc(100% - 28px); margin: 0 auto; }
   .brand img { width: 26px; height: 26px; }
   .nav a:first-child { display: none; }
+  .nav a[data-nav-guide], .nav a[data-nav-workshops] { display: none; }
   .nav a { font-size: 13px; }
   .nav a:last-child { display: none; }
+  .language-toggle { display: inline-flex; }
   h1 { font-size: clamp(40px, 13vw, 58px); }
   .hero-copy { font-size: 17px; }
   .button { width: 100%; justify-content: center; }
