@@ -6,11 +6,12 @@
     <path id="base-segment" d="M 160 450 L 450 450 Q 458 450 460 458 L 438 495 Q 436 499 441 501 L 525.8 508 A 300 300 0 0 1 305 605 A 300 300 0 0 1 84.2 508 L 169 501 Q 174 499 172 495 L 150 458 Q 152 450 160 450 Z"/>
     <!-- Shadow follows the segment inward from its upper edge; it fades toward the circular body. -->
     <linearGradient id="inward-shadow" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6f3218" stop-opacity=".56"/>
-      <stop offset=".42" stop-color="#873b18" stop-opacity=".28"/>
-      <stop offset="1" stop-color="#873b18" stop-opacity="0"/>
+      <stop offset="0" stop-color="#873b18" stop-opacity="0"/>
+      <stop offset=".58" stop-color="#873b18" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#6f3218" stop-opacity=".56"/>
     </linearGradient>
-    <path id="base-shadow" d="M 160 450 L 450 450 Q 457 450 459 457 L 449 474 L 161 474 L 151 457 Q 153 450 160 450 Z"/>
+    <!-- The shadow is outside the orange body: it starts in the central gap and ends at the edge. -->
+    <path id="base-shadow" d="M 160 426 L 450 426 Q 457 426 459 433 L 449 450 L 161 450 L 151 433 Q 153 426 160 426 Z"/>
   </defs>
   <g fill="#f26a21" stroke="#96501e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <use href="#base-segment"/>
