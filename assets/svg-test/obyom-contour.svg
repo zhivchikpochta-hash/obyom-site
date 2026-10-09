@@ -9,7 +9,7 @@
     <path id="base-shadow-left" d="M 84.2 508 L 169 501 Q 174 499 172 495 L 150 458 Q 152 450 160 450"/>
     <path id="base-shadow-top" d="M 160 450 L 450 450"/>
   </defs>
-  <g fill="none" stroke="#873b18" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity=".48" pointer-events="none">
+  <g fill="none" stroke="#1c1c1cff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".48" pointer-events="none">
     <use href="#base-shadow-top"/>
     <use href="#base-shadow-right"/>
     <use href="#base-shadow-left"/>
