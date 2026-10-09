@@ -62,12 +62,15 @@ a { color: inherit; }
 .manifesto { min-height: 50vh; display: grid; grid-template-columns: minmax(180px, .7fr) 1fr; gap: var(--space-7); align-items: center; margin: 0 var(--space-4); padding: var(--space-8) var(--space-4); border-bottom: 1px solid var(--line); }
 .manifesto-intro { margin: 0; color: var(--muted); font-size: clamp(24px, 3vw, 42px); font-weight: 500; letter-spacing: -.04em; line-height: 1.1; }
 .manifesto-intro strong { color: var(--accent); font-weight: 750; }
-.manifesto-stage { position: relative; min-height: 180px; display: grid; place-items: center; }
-.manifesto-slide { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transform: translateY(18px); pointer-events: none; animation: manifesto-cycle 12s infinite; }
+.manifesto-stage { position: relative; min-height: 280px; display: grid; place-items: center; }
+.manifesto-slide { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(160px, 1fr) minmax(130px, .8fr); grid-template-rows: 1fr auto; align-items: center; gap: var(--space-4); opacity: 0; transform: translateY(18px) scale(.97); pointer-events: none; animation: manifesto-cycle 12s infinite; }
 .manifesto-slide--site { animation-delay: 0s; }
 .manifesto-slide--project { animation-delay: 4s; }
 .manifesto-slide--solution { animation-delay: 8s; }
-.manifesto-word { color: var(--text); font-size: clamp(42px, 7vw, 88px); font-weight: 700; letter-spacing: -.06em; line-height: .95; }
+.manifesto-art { width: 100%; max-width: 300px; justify-self: center; overflow: visible; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.manifesto-art path, .manifesto-art rect, .manifesto-art circle { vector-effect: non-scaling-stroke; }
+.manifesto-number { align-self: end; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .1em; }
+.manifesto-word { align-self: end; color: var(--text); font-size: clamp(30px, 4vw, 58px); font-weight: 700; letter-spacing: -.06em; line-height: .95; }
 @keyframes manifesto-cycle {
   0%, 26% { opacity: 1; transform: translateY(0) scale(1); }
   33%, 100% { opacity: 0; transform: translateY(-18px) scale(1.03); }
@@ -171,7 +174,9 @@ code { color: var(--muted); }
   .nav { gap: var(--space-4); }
   .nav a { padding-left: 7px; padding-right: 7px; }
   .manifesto { min-height: 50vh; grid-template-columns: 1fr; gap: var(--space-5); margin: 0 var(--space-2); padding: var(--space-7) var(--space-3) var(--space-6); }
-  .manifesto-stage { min-height: 150px; }
+  .manifesto-stage { min-height: 240px; }
+  .manifesto-slide { grid-template-columns: 1fr; grid-template-rows: 1fr auto auto; justify-items: center; }
+  .manifesto-number, .manifesto-word { align-self: auto; }
   .hero { padding: var(--space-8) 0 var(--space-7); }
   .use-case-grid, .pilot-steps { grid-template-columns: 1fr; }
   .viewer-card { padding: var(--space-4); }
