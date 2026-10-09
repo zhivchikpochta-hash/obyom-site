@@ -11,24 +11,25 @@
 <body data-page="clients">
   <main class="page">
     <header class="header">
-      <a class="brand" href="." aria-label="OBYOM home"><img src="assets/obyom-logo.svg" alt=""><strong>OBYOM</strong></a>
+      <a class="brand" href="index.html" aria-label="OBYOM home"><img src="assets/obyom-logo.svg" alt=""><strong>OBYOM</strong></a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="demo.html">Demo</a>
-        <a href="get-started.html">For developers</a>
-        <a class="nav-active" href="for-clients.html" aria-current="page">For workshops</a>
+        <a data-nav-home href="index.html">Home</a>
+        <a data-nav-demo href="demo.html">Demo</a>
+        <a data-nav-guide href="get-started.html">For developers</a>
+        <a class="nav-active" data-nav-workshops href="for-clients.html" aria-current="page">For workshops</a>
         <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">RU</button>
-        <a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
+        <a data-nav-source href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
       </nav>
     </header>
 
     <section class="docs-hero" aria-labelledby="clients-title">
-      <p class="eyebrow">For workshops and studios</p>
+      <p class="eyebrow" data-clients-eyebrow>For workshops and studios</p>
       <h1 id="clients-title">Show the work. Share the link. Confirm the model.</h1>
-      <p class="docs-lead">You do not need to learn programming to use the OBYOM client workflow. Start with one real 3D model and we will help turn it into a browser-based preview.</p>
+      <p class="docs-lead" data-clients-lead>You do not need to learn programming to use the OBYOM client workflow. Start with one real 3D model and we will help turn it into a browser-based preview.</p>
     </section>
 
     <section class="use-cases" aria-labelledby="client-flow-title">
-      <div class="section-heading"><p class="eyebrow">A simple client workflow</p><h2 id="client-flow-title">From model to approval in three steps.</h2></div>
+      <div class="section-heading"><p class="eyebrow" data-client-flow-eyebrow>A simple client workflow</p><h2 id="client-flow-title" data-client-flow-title>From model to approval in three steps.</h2></div>
       <ol class="pilot-steps">
         <li><strong>Choose a model</strong><span>Send one finished model or portfolio piece. No code and no CAD installation for your client.</span></li>
         <li><strong>Share a private link</strong><span>Your client opens the model in a browser and checks the shape, scale, and dimensions.</span></li>
@@ -37,18 +38,21 @@
     </section>
 
     <section class="feature-grid" aria-label="Approval record">
-      <div class="feature"><span class="feature-index">MODEL</span><strong>One exact file</strong><span>The approval is tied to a concrete model version and file hash.</span></div>
-      <div class="feature"><span class="feature-index">SCALE</span><strong>Clear dimensions</strong><span>Show the client the scale, width, height, and depth before production.</span></div>
-      <div class="feature"><span class="feature-index">STATUS</span><strong>Visible decision</strong><span>Track pending, approved, or sent back for changes.</span></div>
+      <div class="feature"><span class="feature-index" data-client-feature-label>MODEL</span><strong data-client-feature-title>One exact file</strong><span data-client-feature-copy>The approval is tied to a concrete model version and file hash.</span></div>
+      <div class="feature"><span class="feature-index" data-client-feature-label>SCALE</span><strong data-client-feature-title>Clear dimensions</strong><span data-client-feature-copy>Show the client the scale, width, height, and depth before production.</span></div>
+      <div class="feature"><span class="feature-index" data-client-feature-label>STATUS</span><strong data-client-feature-title>Visible decision</strong><span data-client-feature-copy>Track pending, approved, or sent back for changes.</span></div>
     </section>
 
     <section class="pilot" id="pilot" aria-labelledby="pilot-title">
-      <div class="section-heading"><p class="eyebrow">Start without the technical setup</p><h2 id="pilot-title">Bring one model. We will discuss the right client-facing format.</h2></div>
-      <p class="hero-copy">The developer documentation is available separately. If you only need a portfolio page or an approval link, start with a conversation instead.</p>
+      <div class="section-heading"><p class="eyebrow" data-client-pilot-eyebrow>Start without the technical setup</p><h2 id="pilot-title" data-client-pilot-title>Bring one model. We will discuss the right client-facing format.</h2></div>
+      <p class="hero-copy" data-client-pilot-copy>The developer documentation is available separately. If you only need a portfolio page or an approval link, start with a conversation instead.</p>
 
     </section>
 
-    <footer><span>OBYOM for 3D workshops</span><span><a href="demo.html">Explore the demo ↗</a></span></footer>
+    <footer class="site-footer">
+      <div class="footer-contacts"><a href="mailto:3axap777@vk.com" data-footer-email>Contact by email</a><a href="https://t.me/iopa3axap777" target="_blank" rel="noreferrer" data-footer-telegram>Telegram</a></div>
+      <div class="footer-credit"><span data-footer-developed>Developed by 3axap777</span><span>© 2026</span></div>
+    </footer>
   </main>
   <script src="i18n.js"></script>
 </body>

@@ -15,6 +15,9 @@ const message = document.getElementById('message');
 const configOutput = document.getElementById('viewer-config');
 const translate = (key) => window.OBYOM_I18N?.t(`main.${key}`) || key;
 
+// Consume wheel zoom only on the model surface; the document remains scrollable everywhere else.
+canvas?.addEventListener('wheel', (event) => event.preventDefault(), { passive: false });
+
 function scheduleReadyPulse(dot) {
   const delay = 1000 + Math.random() * 2000;
   window.setTimeout(() => {

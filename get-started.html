@@ -11,11 +11,12 @@
 <body>
   <main class="page">
     <header class="header">
-      <a class="brand" href="." aria-label="OBYOM home">
+      <a class="brand" href="index.html" aria-label="OBYOM home">
         <img src="assets/obyom-logo.svg" alt="">
         <strong>OBYOM</strong>
       </a>
       <nav class="nav" aria-label="Primary navigation">
+        <a data-nav-home href="index.html">Home</a>
         <a data-nav-demo href="demo.html">Demo</a>
         <a class="nav-active" data-nav-guide href="get-started.html" aria-current="page">For developers</a>
         <a href="for-clients.html">For workshops</a>
@@ -92,9 +93,9 @@ python3 -m http.server 8080</code></pre>
       </article>
     </div>
 
-    <footer>
-      <span>OBYOM WebGPU viewer</span>
-      <span><a href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code ↗</a></span>
+    <footer class="site-footer">
+      <div class="footer-contacts"><a href="mailto:3axap777@vk.com" data-footer-email>Contact by email</a><a href="https://t.me/iopa3axap777" target="_blank" rel="noreferrer" data-footer-telegram>Telegram</a></div>
+      <div class="footer-credit"><span data-footer-developed>Developed by 3axap777</span><span>© 2026</span></div>
     </footer>
   </main>
   <script src="i18n.js"></script>

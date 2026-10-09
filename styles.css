@@ -23,13 +23,14 @@
   --space-8: 64px;
   --space-9: 96px;
 }
-html { scroll-behavior: smooth; overflow-x: hidden; overflow-y: auto; }
+html { scroll-behavior: smooth; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: auto; }
 body {
   margin: 0;
   min-width: 320px;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior-y: auto;
   position: relative;
   background:
     radial-gradient(circle at 12% 8%, rgba(242, 106, 33, .09), transparent 28rem),
@@ -159,7 +160,7 @@ h2 { margin-bottom: 0; font-size: clamp(26px, 4vw, 32px); line-height: 1.1; lett
   0%, 100% { box-shadow: 0 0 0 4px rgba(242, 106, 33, .14); filter: brightness(1); }
   50% { box-shadow: 0 0 0 5px rgba(242, 106, 33, .2), 0 0 18px 7px rgba(242, 106, 33, .8); filter: brightness(1.8); }
 }
-.canvas-frame { position: relative; width: min(100%, 620px); aspect-ratio: 1; margin: 0 auto; overflow: hidden; border: 1px solid #252c37; border-radius: 10px; background: radial-gradient(circle at 50% 42%, #202832 0%, #0c1016 100%); }
+.canvas-frame { position: relative; width: min(100%, 620px); aspect-ratio: 1; margin: 0 auto; overflow: hidden; overscroll-behavior: contain; border: 1px solid #252c37; border-radius: 10px; background: radial-gradient(circle at 50% 42%, #202832 0%, #0c1016 100%); }
 /* Gesture and scroll interception belong only to the interactive model surface. */
 .canvas-frame canvas { display: block; width: 100%; height: 100%; aspect-ratio: 1; touch-action: none; user-select: none; -webkit-user-select: none; }
 .message { position: absolute; inset: 50% 20px auto; transform: translateY(-50%); margin: 0; color: #f4f6f8; font-weight: 600; text-align: center; }
@@ -171,7 +172,10 @@ h2 { margin-bottom: 0; font-size: clamp(26px, 4vw, 32px); line-height: 1.1; lett
 .feature-index { color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .1em; }
 .feature strong { font-size: 17px; line-height: 1.3; }
 .feature span:last-child { color: var(--muted); font-size: 14px; line-height: 1.5; }
-footer { display: flex; justify-content: space-between; gap: var(--space-5); padding: 0 0 var(--space-7); color: var(--subtle); font-size: 13px; }
+.site-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding: var(--space-6) 0 var(--space-7); border-top: 1px solid var(--line); color: var(--subtle); font-size: 13px; }
+.footer-contacts, .footer-credit { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent-bright); }
 .browser-support { margin: var(--space-8) 0 var(--space-7); padding: var(--space-7) 4px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .browser-support-heading { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); }
 .browser-support-heading h2 { margin: 0; }
@@ -251,7 +255,7 @@ code { color: var(--muted); }
   .guide-section { padding-bottom: var(--space-7); margin-bottom: var(--space-7); }
   .code-block { padding: var(--space-4); font-size: 12px; }
 
-  footer { align-items: flex-start; flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-6); }
+  .site-footer { align-items: flex-start; flex-direction: column; gap: var(--space-3); padding-bottom: var(--space-6); }
 }
 @media (max-width: 480px) {
   .manifesto-intro { font-size: clamp(34px, 10vw, 52px); }
