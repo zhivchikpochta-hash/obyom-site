@@ -4,10 +4,22 @@
   <defs>
     <!-- Source of truth: one lower segment. Straight top and circular arc are preserved; corner and side transitions are rebuilt as smooth geometry. -->
     <path id="base-segment" d="M 160 450 L 450 450 Q 458 450 460 458 L 438 495 Q 436 499 441 501 L 525.8 508 A 300 300 0 0 1 305 605 A 300 300 0 0 1 84.2 508 L 169 501 Q 174 499 172 495 L 150 458 Q 152 450 160 450 Z"/>
+    <!-- Shadow follows the segment inward from its upper edge; it fades toward the circular body. -->
+    <linearGradient id="inward-shadow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f3218" stop-opacity=".56"/>
+      <stop offset=".42" stop-color="#873b18" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#873b18" stop-opacity="0"/>
+    </linearGradient>
+    <path id="base-shadow" d="M 160 450 L 450 450 Q 457 450 459 457 L 449 474 L 161 474 L 151 457 Q 153 450 160 450 Z"/>
   </defs>
   <g fill="#f26a21" stroke="#96501e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <use href="#base-segment"/>
     <use href="#base-segment" transform="rotate(120 305 305)"/>
     <use href="#base-segment" transform="rotate(240 305 305)"/>
+  </g>
+  <g fill="url(#inward-shadow)" pointer-events="none">
+    <use href="#base-shadow"/>
+    <use href="#base-shadow" transform="rotate(120 305 305)"/>
+    <use href="#base-shadow" transform="rotate(240 305 305)"/>
   </g>
 </svg>
