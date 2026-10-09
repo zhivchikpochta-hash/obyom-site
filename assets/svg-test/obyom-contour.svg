@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="610" height="610" viewBox="0 0 610 610" role="img" aria-labelledby="title desc">
+  <title id="title">OBYOM rebuilt geometric contour</title>
+  <desc id="desc">One rebuilt lower segment with a preserved straight top edge and circular lower arc, repeated by rotation.</desc>
+  <defs>
+    <!-- Source of truth: one lower segment. Straight top and circular arc are preserved; corner and side transitions are rebuilt as smooth geometry. -->
+    <path id="base-segment" d="M 160 450 L 450 450 Q 458 450 460 458 L 438 495 Q 436 499 441 501 L 525.8 508 A 300 300 0 0 1 305 605 A 300 300 0 0 1 84.2 508 L 169 501 Q 174 499 172 495 L 150 458 Q 152 450 160 450 Z"/>
+  </defs>
+  <g fill="#96501e" stroke="#96501e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <use href="#base-segment"/>
+    <use href="#base-segment" transform="rotate(120 305 305)"/>
+    <use href="#base-segment" transform="rotate(240 305 305)"/>
+  </g>
+</svg>

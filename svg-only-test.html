@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>OBYOM SVG only test</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: #101217; color: #f4f6f8; font: 15px/1.5 system-ui, sans-serif; }
+    main { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 60px; }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 5vw, 52px); letter-spacing: -.04em; }
+    p { margin: 0 0 28px; color: #aeb7c5; }
+    .artboard { display: grid; place-items: center; width: 100%; aspect-ratio: 1; overflow: hidden; border: 1px solid #29313d; border-radius: 12px; background: #e8e6e2; }
+    .artboard img, .artboard object { grid-area: 1 / 1; display: block; width: 100%; height: 100%; object-fit: contain; }
+    .artboard object { opacity: .5; mix-blend-mode: multiply; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>SVG contour</h1>
+    <p>Overlay: reference PNG at 50% opacity with the rebuilt SVG contour.</p>
+    <div class="artboard overlay"><img src="assets/svg-test/logo.png" alt="Logo reference"><object data="assets/svg-test/obyom-contour.svg" type="image/svg+xml" aria-label="OBYOM SVG contour over PNG reference"></object></div>
+  </main>
+</body>
+</html>
