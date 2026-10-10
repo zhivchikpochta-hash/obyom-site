@@ -7,7 +7,7 @@
     "check": "webpack --mode production --stats errors-only"
   },
   "dependencies": {
-    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#master"
+    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#test"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^13.0.1",

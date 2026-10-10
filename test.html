@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive">
+  <meta name="description" content="Private OBYOM test instance using the library test branch.">
+  <title>OBYOM — private test</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .private-test { min-height: 100vh; display: grid; place-items: center; padding: 32px 0 64px; }
+    .private-test-card { width: min(900px, 100%); padding: clamp(24px, 5vw, 56px); border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .private-test-card h1 { margin: 0 0 12px; font-size: clamp(34px, 6vw, 64px); }
+    .private-test-card > p { color: var(--muted); }
+    .private-test .viewer-card { margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <main class="page private-test">
+    <section class="private-test-card" aria-labelledby="test-title">
+      <p class="eyebrow">Private library test</p>
+      <h1 id="test-title">OBYOM test branch</h1>
+      <p>This page is intentionally unlinked from the public site and excluded from search indexing.</p>
+      <section class="viewer-card demo-viewer" aria-labelledby="viewer-title">
+        <div class="viewer-heading">
+          <h2 id="viewer-title">OBYOM viewer</h2>
+          <p class="status" id="status" aria-live="polite"><span class="status-dot status-dot--loading" aria-hidden="true"></span>Loading…</p>
+        </div>
+        <div class="canvas-frame">
+          <canvas id="viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-label="Interactive OBYOM logo model"></canvas>
+          <p class="message" id="message">Initializing the private test instance…</p>
+        </div>
+        <p class="model-caption"><strong id="model-name">OBYOM Logo</strong><span>Library branch: test</span></p>
+        <pre class="viewer-config" id="viewer-config" aria-label="Viewer configuration"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="site.js"></script>
+</body>
+</html>
