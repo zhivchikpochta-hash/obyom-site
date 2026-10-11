@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /test.html
+Disallow: /svg-test.html
+Disallow: /svg-only-test.html
+
+Sitemap: https://obyom.org/sitemap.xml
