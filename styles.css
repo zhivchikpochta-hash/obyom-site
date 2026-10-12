@@ -23,7 +23,7 @@
   --space-8: 64px;
   --space-9: 96px;
 }
-html { scroll-behavior: smooth; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: auto; }
+html { scroll-behavior: auto; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: auto; }
 body {
   margin: 0;
   min-width: 320px;
