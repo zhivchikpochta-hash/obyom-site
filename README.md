@@ -75,6 +75,10 @@ The demo keeps the viewer instance in the site controller and calls `destroy()` 
 - **Touch:** one-finger drag to rotate, two fingers to zoom and pan
 - **Mobile:** the viewer canvas uses `touch-action: none`, so model gestures do not become page scrolling
 
+## Russian pilot landing page
+
+The workshop pilot landing page is available at [`landing.html`](landing.html). It describes the actual product flow: a workshop creates a link, a client uploads an STL, both sides preview the model in the browser, and the workshop confirms the exact version before downloading it.
+
 ## Project structure
 
 ```text
