@@ -89,6 +89,10 @@ jobs:
           path.write_text(text)
           PY
 
+      - name: Add static landing page to the deployed site
+        run: |
+          test -s landing.html
+
       - name: Verify real library integration
         env:
           RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
