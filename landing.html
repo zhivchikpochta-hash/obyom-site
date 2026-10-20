@@ -1,84 +1,83 @@
-     1|<!doctype html>
-     2|<html lang="ru">
-     3|<head>
-     4|  <meta charset="utf-8">
-     5|  <meta name="viewport" content="width=device-width, initial-scale=1">
-     6|  <meta name="description" content="OBYOM помогает мастерским 3D-печати принять STL от клиента, проверить модель в браузере и подтвердить нужную версию.">
-     7|  <meta name="robots" content="index,follow">
-     8|  <link rel="icon" type="image/svg+xml" href="assets/obyom-logo.svg">
-     9|  <link rel="canonical" href="https://obyom.org/landing.html">
-    10|  <title>OBYOM — подтвердите нужную STL-модель до печати</title>
-    11|  <style>
-    12|    :root{color-scheme:dark;--bg:#10151b;--surface:#171d24;--surface-2:#1d2630;--line:#30404c;--text:#f4f7f9;--muted:#a8b6bf;--subtle:#71818c;--accent:#f26a21;--accent-hover:#ff8542;--accent-soft:#3a2117;--green:#53c889;--green-soft:#123426;--radius-sm:8px;--radius-md:12px;--radius-lg:18px;--radius-xl:24px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-24:96px;}
-    13|    *{box-sizing:border-box}html{scroll-behavior:auto;overflow-x:clip}body{margin:0;min-width:320px;max-width:100vw;overflow-x:clip;background:var(--bg);color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:10;background:#fff;color:#10151b;padding:10px}.header{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.header-actions{display:flex;align-items:center;gap:14px}.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;letter-spacing:.12em;font-size:14px;font-weight:800}.brand img{width:30px;height:30px}.nav{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:650;color:var(--muted)}.nav a{text-decoration:none}.nav a:hover{color:var(--text)}.nav-cta{padding:9px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--text)!important}.nav-cta:hover{border-color:var(--accent);color:var(--accent-hover)!important}.theme-toggle,.menu-toggle{min-height:40px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:0 11px;color:var(--muted);font-size:12px}.theme-toggle:hover,.menu-toggle:hover{border-color:var(--accent);color:var(--accent-hover)}.theme-toggle span:first-child{font-size:18px;line-height:1}.menu-toggle{display:none;width:40px;padding:9px}.menu-toggle i{display:block;height:1px;margin:4px 0;background:currentColor}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.eyebrow{margin:0 0 16px;color:var(--accent-hover);font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:up... [truncated]
-    14|    @media (max-width:900px){.hero{grid-template-columns:1fr;gap:48px;padding:88px 0 96px}.hero-panel{max-width:640px}.how,.final{grid-template-columns:1fr;gap:40px}.nav{gap:14px}.nav a:not(.nav-cta){display:none}.theme-toggle .theme-label{display:none}.menu-toggle{display:block}.header-actions{gap:8px}.nav{position:absolute;top:76px;right:24px;left:24px;display:none;padding:10px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);box-shadow:0 18px 40px rgba(0,0,0,.25)}.nav.is-open{display:grid;gap:4px}.nav.is-open a{display:block;padding:12px}.nav.is-open .nav-cta{text-align:center}}
-    15|    @media (max-width:640px){.wrap{width:min(100% - 32px,1160px)}.header{height:68px}.brand img{width:26px;height:26px}.hero{grid-template-columns:minmax(0,1fr);padding:72px 0 80px}h1{font-size:clamp(40px,14vw,62px)}.lead{font-size:18px}.problem-grid,.feature-grid,.steps{grid-template-columns:1fr}.problem,.feature,.step{min-height:0;padding:24px}.problem strong{margin-bottom:22px}.step{grid-template-columns:auto 1fr}.step p{grid-column:2}.final{gap:28px}section{padding:80px 0}.footer{display:grid;gap:12px}.order-head{display:grid}.status{justify-self:start}}
-    /* Hero spans the full main container and keeps its two-column content centered. */
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OBYOM помогает мастерским 3D-печати принять STL от клиента, проверить модель в браузере и подтвердить нужную версию.">
+  <meta name="robots" content="index,follow">
+  <link rel="icon" type="image/svg+xml" href="assets/obyom-logo.svg">
+  <link rel="canonical" href="https://obyom.org/landing.html">
+  <title>OBYOM — подтвердите нужную STL-модель до печати</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10151b;--surface:#171d24;--surface-2:#1d2630;--line:#30404c;--text:#f4f7f9;--muted:#a8b6bf;--subtle:#71818c;--accent:#f26a21;--accent-hover:#ff8542;--accent-soft:#3a2117;--green:#53c889;--green-soft:#123426;--radius-sm:8px;--radius-md:12px;--radius-lg:18px;--radius-xl:24px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-24:96px;}
+    *{box-sizing:border-box}html{scroll-behavior:auto;overflow-x:clip}body{margin:0;min-width:320px;max-width:100vw;overflow-x:clip;background:var(--bg);color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:10;background:#fff;color:#10151b;padding:10px}.header{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.header-actions{display:flex;align-items:center;gap:14px}.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;letter-spacing:.12em;font-size:14px;font-weight:800}.brand img{width:30px;height:30px}.nav{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:650;color:var(--muted)}.nav a{text-decoration:none}.nav a:hover{color:var(--text)}.nav-cta{padding:9px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--text)!important}.nav-cta:hover{border-color:var(--accent);color:var(--accent-hover)!important}.theme-toggle,.menu-toggle{min-height:40px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:0 11px;color:var(--muted);font-size:12px}.theme-toggle:hover,.menu-toggle:hover{border-color:var(--accent);color:var(--accent-hover)}.theme-toggle span:first-child{font-size:18px;line-height:1}.menu-toggle{display:none;width:40px;padding:9px}.menu-toggle i{display:block;height:1px;margin:4px 0;background:currentColor}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.eyebrow{margin:0 0 16px;color:var(--accent-hover);font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:center;padding:112px 0 120px;border-bottom:1px solid var(--line)}h1,h2,h3,p{margin-top:0}h1{max-width:700px;margin-bottom:24px;font-size:clamp(44px,6.2vw,78px);line-height:.98;letter-spacing:-.06em}h2{margin-bottom:16px;font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.05em}h3{margin-bottom:8px;font-size:20px;line-height:1.15;letter-spacing:-.03em}.lead{max-width:620px;color:var(--muted);font-size:20px;line-height:1.5}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.button{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:0 18px;border:1px solid transparent;border-radius:var(--radius-sm);font-weight:750;text-decoration:none}.button-primary{background:var(--accent);color:#180b05}.button-primary:hover{background:var(--accent-hover)}.button-secondary{border-color:var(--line);color:var(--text)}.button-secondary:hover{border-color:var(--accent);color:var(--accent-hover)}.proof{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;color:var(--subtle);font-size:13px}.proof span{display:inline-flex;align-items:center;gap:8px}.proof i{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}.hero-panel{position:relative;border:1px solid var(--line);border-radius:var(--radius-xl);background:var(--surface);padding:20px;box-shadow:0 24px 64px rgba(0,0,0,.22)}.window-top{display:flex;align-items:center;justify-content:space-between;padding:0 2px 16px;color:var(--subtle);font-size:12px}.window-dots{display:flex;gap:5px}.window-dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}.real-viewer{position:relative;aspect-ratio:1 / .82;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg);background:#0c1116}.real-viewer canvas{display:block;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none}.real-viewer .message{position:absolute;inset:50% 20px auto;transform:translateY(-50%);margin:0;color:var(--text);font-size:13px;font-weight:650;text-align:center}.viewer-status{display:flex;align-items:center;gap:7px;margin-top:14px;color:var(--muted);font-size:12px}.viewer-status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(242,106,33,.14)}.viewer-caption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;color:var(--muted);font-size:12px}.viewer-caption b{color:var(--text)}section{padding:112px 0;border-bottom:1px solid var(--line)}.section-intro{max-width:680px;margin-bottom:40px}.section-intro p:not(.eyebrow){color:var(--muted);font-size:18px}.problem-grid,.feature-grid,.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line)}.problem,.feature,.step{min-height:190px;padding:28px;background:var(--surface)}.problem strong,.feature strong,.step strong{display:block;margin-bottom:34px;color:var(--accent-hover);font-size:13px;letter-spacing:.1em;text-transform:uppercase}.problem p,.feature p,.step p{margin:0;color:var(--muted)}.feature strong{font-size:18px;letter-spacing:-.02em;text-transform:none;color:var(--text);margin-bottom:12px}.how{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}.steps{counter-reset:step}.step{min-height:0;display:grid;grid-template-columns:auto 1fr;gap:18px}.step:before{counter-increment:step;content:counter(step,decimal-leading-zero);color:var(--accent);font-size:13px;font-weight:800}.step strong{margin:0;color:var(--text);font-size:18px;letter-spacing:-.02em;text-transform:none}.step p{grid-column:2;margin-top:-10px}.final{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}.confirm-card{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:28px}.confirm-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}.confirm-row:last-child{border-bottom:0;padding-bottom:0}.confirm-row:first-child{padding-top:0}.confirm-row span{color:var(--muted);font-size:14px}.confirm-row b{font-size:14px}.confirm-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:22px}.footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px 0 48px;color:var(--subtle);font-size:13px}.footer a{text-decoration:none}.footer a:hover{color:var(--accent-hover)}
+    @media (max-width:900px){.hero{grid-template-columns:1fr;gap:48px;padding:88px 0 96px}.hero-panel{max-width:640px}.how,.final{grid-template-columns:1fr;gap:40px}.nav{gap:14px}.nav a:not(.nav-cta){display:none}.theme-toggle .theme-label{display:none}.menu-toggle{display:block}.header-actions{gap:8px}.nav{position:absolute;top:76px;right:24px;left:24px;display:none;padding:10px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);box-shadow:0 18px 40px rgba(0,0,0,.25)}.nav.is-open{display:grid;gap:4px}.nav.is-open a{display:block;padding:12px}.nav.is-open .nav-cta{text-align:center}}
+    @media (max-width:640px){.wrap{width:min(100% - 32px,1160px)}.header{height:68px}.brand img{width:26px;height:26px}.hero{grid-template-columns:minmax(0,1fr);padding:72px 0 80px}h1{font-size:clamp(40px,14vw,62px)}.lead{font-size:18px}.problem-grid,.feature-grid,.steps{grid-template-columns:1fr}.problem,.feature,.step{min-height:0;padding:24px}.problem strong{margin-bottom:22px}.step{grid-template-columns:auto 1fr}.step p{grid-column:2}.final{gap:28px}section{padding:80px 0}.footer{display:grid;gap:12px}.order-head{display:grid}.status{justify-self:start}}
+    /* Hero spans the full main container. */
     main{width:100%}
     main > .hero{width:100%;margin-left:0}
     html[data-theme="light"]{color-scheme:light;--bg:#f5f7f8;--surface:#ffffff;--surface-2:#edf1f3;--line:#d7e0e5;--text:#10151b;--muted:#52636f;--subtle:#71818c;--accent:#f26a21;--accent-hover:#d95716;--accent-soft:#fff0e8;--green:#16794a;--green-soft:#e7f6ee}
-    19|    html[data-theme="light"] body{background:var(--bg);color:var(--text)}
-    20|    html[data-theme="light"] .hero-panel,html[data-theme="light"] .problem,html[data-theme="light"] .feature,html[data-theme="light"] .step,html[data-theme="light"] .confirm-card{box-shadow:0 18px 45px rgba(16,21,27,.06)}
-    21|    @media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
-    22|  </style>
-    23|</head>
-    24|<body>
-    25|<a class="skip" href="#main">Перейти к содержимому</a>
-    26|<div class="wrap">
-    27|  <header class="header">
-    28|    <a class="brand" href="index.html" aria-label="OBYOM — главная"><img src="assets/obyom-logo.svg" alt=""><span>OBYOM</span></a>
-    29|    <div class="header-actions">
-    30|      <nav class="nav" id="landing-nav" aria-label="Основная навигация"><a href="#how">Как это работает</a><a href="#pilot">Пилот</a><a class="nav-cta" href="mailto:3axap777@vk.com">Связаться</a></nav>
-    31|      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Включить светлую тему" aria-pressed="false"><span aria-hidden="true">☼</span><span class="theme-label">Светлая тема</span></button>
-    32|      <button class="menu-toggle" type="button" id="menu-toggle" aria-controls="landing-nav" aria-expanded="false"><span class="sr-only">Открыть меню</span><i></i><i></i><i></i></button>
-    33|    </div>
-    34|  </header>
-    35|  <main id="main">
-    36|    <section class="hero" aria-labelledby="hero-title">
-    37|      <div><p class="eyebrow">Для мастерских 3D-печати</p><h1>Подтвердите нужную модель до печати.</h1><p class="lead">OBYOM даёт клиенту ссылку для загрузки STL, показывает модель в браузере и помогает мастерской подтвердить именно ту версию, которая пойдёт дальше в работу.</p><div class="proof"><span><i></i>Без CAD для клиента</span><span><i></i>STL до 100 МБ</span><span><i></i>Ссылка на 7 дней</span></div></div>
-    38|      <div class="hero-panel" aria-label="Интерактивный preview OBYOM"><div class="window-top"><span>obyom / order #OB-1042</span><span class="window-dots"><i></i><i></i><i></i></span></div><div class="real-viewer"><canvas id="pilot-viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-label="Интерактивная 3D-модель OBYOM"></canvas><p class="message" id="pilot-message">Загрузка preview…</p></div><div class="viewer-status" id="pilot-status">Проверка поддержки WebGPU…</div><div class="viewer-caption"><span>STL <b>OBYOM_LOGO.stl</b></span><span>Интерактивный preview</span></div></div>
-    39|    </section>
-    40|    <section aria-labelledby="problem-title"><div class="section-intro"><p class="eyebrow">Проблема</p><h2 id="problem-title">Мессенджер не фиксирует, какая модель правильная.</h2><p>Клиент может прислать не тот STL, а сотруднику придётся открыть файл на десктопе и разбираться с версиями вручную.</p></div><div class="problem-grid"><article class="problem"><strong>01</strong><h3>Лишнее время</h3><p>Чтобы просто посмотреть модель, сотруднику нужно открыть её в отдельном приложении.</p></article><article class="problem"><strong>02</strong><h3>Неправильная версия</h3><p>В переписке легко потерять контекст и перепутать последний файл с предыдущим.</p></article><article class="problem"><strong>03</strong><h3>Ошибка обнаруживается поздно</h3><p>Клиент может не понять, что отправил не ту модель, пока мастерская уже не начала работу.</p></article></div></section>
-    41|    <section id="how" aria-labelledby="how-title"><div class="how"><div class="section-intro"><p class="eyebrow">Один понятный процесс</p><h2 id="how-title">От ссылки до подтверждённой версии.</h2><p>В пилоте мастерская создаёт ссылку вручную. Клиент и сотрудник последовательно смотрят на одну модель.</p></div><div class="steps"><article class="step"><strong>Мастерская создаёт ссылку</strong><p>Название, номер заказа и описание модели. Ссылка действует 7 дней.</p></article><article class="step"><strong>Клиент загружает STL</strong><p>Без регистрации и авторизации. Модель сразу появляется в браузере.</p></article><article class="step"><strong>Клиент нажимает «Подтвердить»</strong><p>Перед подтверждением OBYOM предупреждает: другую модель по этой ссылке загрузить нельзя.</p></article><article class="step"><strong>Сотрудник проверяет и скачивает</strong><p>Проверяет внешний вид и версию, подтверждает модель и скачивает файл.</p></article></div></div></section>
-    42|    <section id="pilot" aria-labelledby="pilot-title"><div class="section-intro"><p class="eyebrow">Первый пилот</p><h2 id="pilot-title">Начните с одного реального заказа.</h2><p>OBYOM не заменяет ваш production workflow. Он закрывает конкретный момент: приём, просмотр и подтверждение STL перед дальнейшей обработкой.</p></div><div class="feature-grid"><article class="feature"><strong>Браузер вместо CAD</strong><p>Клиент и сотрудник смотрят модель без установки дополнительного ПО.</p></article><article class="feature"><strong>Одна версия в фокусе</strong><p>Статус заказа и файл остаются связаны с одной ссылкой.</p></article><article class="feature"><strong>Данные мастерской отдельно</strong><p>Личный кабинет показывает только свои заказы, ссылки и историю.</p></article></div></section>
-    43|    <section aria-labelledby="confirm-title"><div class="final"><div class="section-intro"><p class="eyebrow">Результат</p><h2 id="confirm-title">Обе стороны видят, что модель принята.</h2><p>После проверки сотрудником клиент при повторном открытии ссылки видит статус «Подтверждено сотрудником». Скачивание файла и дальнейшее производство остаются у мастерской.</p><a class="button button-primary" href="mailto:3axap777@vk.com">Обсудить пилот</a></div><div class="confirm-card"><div class="confirm-row"><span>Заказ</span><b>#OB-1042</b></div><div class="confirm-row"><span>Модель</span><b>Корпус камеры</b></div><div class="confirm-row"><span>Версия</span><b>camera-body-v3.stl</b></div><div class="confirm-row"><span>Статус</span><span class="confirm-mark">✓</span></div></div></div></section>
-    44|  </main>
-    45|  <footer class="footer"><span>OBYOM · браузерное подтверждение STL-моделей</span><span><a href="index.html">Главная</a> · <a href="mailto:3axap777@vk.com">3axap777@vk.com</a></span></footer>
-    46|</div>
-    47|<script src="site-e435ae9.js"></script>
-    48|<script>
-    49|(() => {
-    50|  const root = document.documentElement;
-    51|  const themeButton = document.getElementById('theme-toggle');
-    52|  const menuButton = document.getElementById('menu-toggle');
-    53|  const nav = document.getElementById('landing-nav');
-    54|  const stored = localStorage.getItem('obyom-landing-theme');
-    55|  if (stored === 'light') root.dataset.theme = 'light';
-    56|  const syncTheme = () => {
-    57|    const light = root.dataset.theme === 'light';
-    58|    themeButton?.setAttribute('aria-pressed', String(light));
-    59|    themeButton?.setAttribute('aria-label', light ? 'Включить тёмную тему' : 'Включить светлую тему');
-    60|    if (themeButton) themeButton.querySelector('.theme-label').textContent = light ? 'Тёмная тема' : 'Светлая тема';
-    61|    if (themeButton) themeButton.querySelector('span:first-child').textContent = light ? '◐' : '☼';
-    62|  };
-    63|  syncTheme();
-    64|  themeButton?.addEventListener('click', () => {
-    65|    root.classList.add('theme-transition');
-    66|    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
-    67|    localStorage.setItem('obyom-landing-theme', root.dataset.theme);
-    68|    syncTheme();
-    69|    setTimeout(() => root.classList.remove('theme-transition'), 240);
-    70|  });
-    71|  menuButton?.addEventListener('click', () => {
-    72|    const open = nav?.classList.toggle('is-open');
-    73|    menuButton.setAttribute('aria-expanded', String(Boolean(open)));
-    74|  });
-    75|  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-    76|    nav.classList.remove('is-open');
-    77|    menuButton?.setAttribute('aria-expanded', 'false');
-    78|  }));
-    79|})();
-    80|</script>
-    81|</body>
-    82|</html>
-    83|
+    html[data-theme="light"] body{background:var(--bg);color:var(--text)}
+    html[data-theme="light"] .hero-panel,html[data-theme="light"] .problem,html[data-theme="light"] .feature,html[data-theme="light"] .step,html[data-theme="light"] .confirm-card{box-shadow:0 18px 45px rgba(16,21,27,.06)}
+    @media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержимому</a>
+<div class="wrap">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="OBYOM — главная"><img src="assets/obyom-logo.svg" alt=""><span>OBYOM</span></a>
+    <div class="header-actions">
+      <nav class="nav" id="landing-nav" aria-label="Основная навигация"><a href="#how">Как это работает</a><a href="#pilot">Пилот</a><a class="nav-cta" href="mailto:3axap777@vk.com">Связаться</a></nav>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Включить светлую тему" aria-pressed="false"><span aria-hidden="true">☼</span><span class="theme-label">Светлая тема</span></button>
+      <button class="menu-toggle" type="button" id="menu-toggle" aria-controls="landing-nav" aria-expanded="false"><span class="sr-only">Открыть меню</span><i></i><i></i><i></i></button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div><p class="eyebrow">Для мастерских 3D-печати</p><h1>Подтвердите нужную модель до печати.</h1><p class="lead">OBYOM даёт клиенту ссылку для загрузки STL, показывает модель в браузере и помогает мастерской подтвердить именно ту версию, которая пойдёт дальше в работу.</p><div class="proof"><span><i></i>Без CAD для клиента</span><span><i></i>STL до 100 МБ</span><span><i></i>Ссылка на 7 дней</span></div></div>
+      <div class="hero-panel" aria-label="Интерактивный preview OBYOM"><div class="window-top"><span>obyom / order #OB-1042</span><span class="window-dots"><i></i><i></i><i></i></span></div><div class="real-viewer"><canvas id="pilot-viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-label="Интерактивная 3D-модель OBYOM"></canvas><p class="message" id="pilot-message">Загрузка preview…</p></div><div class="viewer-status" id="pilot-status">Проверка поддержки WebGPU…</div><div class="viewer-caption"><span>STL <b>OBYOM_LOGO.stl</b></span><span>Интерактивный preview</span></div></div>
+    </section>
+    <section aria-labelledby="problem-title"><div class="section-intro"><p class="eyebrow">Проблема</p><h2 id="problem-title">Мессенджер не фиксирует, какая модель правильная.</h2><p>Клиент может прислать не тот STL, а сотруднику придётся открыть файл на десктопе и разбираться с версиями вручную.</p></div><div class="problem-grid"><article class="problem"><strong>01</strong><h3>Лишнее время</h3><p>Чтобы просто посмотреть модель, сотруднику нужно открыть её в отдельном приложении.</p></article><article class="problem"><strong>02</strong><h3>Неправильная версия</h3><p>В переписке легко потерять контекст и перепутать последний файл с предыдущим.</p></article><article class="problem"><strong>03</strong><h3>Ошибка обнаруживается поздно</h3><p>Клиент может не понять, что отправил не ту модель, пока мастерская уже не начала работу.</p></article></div></section>
+    <section id="how" aria-labelledby="how-title"><div class="how"><div class="section-intro"><p class="eyebrow">Один понятный процесс</p><h2 id="how-title">От ссылки до подтверждённой версии.</h2><p>В пилоте мастерская создаёт ссылку вручную. Клиент и сотрудник последовательно смотрят на одну модель.</p></div><div class="steps"><article class="step"><strong>Мастерская создаёт ссылку</strong><p>Название, номер заказа и описание модели. Ссылка действует 7 дней.</p></article><article class="step"><strong>Клиент загружает STL</strong><p>Без регистрации и авторизации. Модель сразу появляется в браузере.</p></article><article class="step"><strong>Клиент нажимает «Подтвердить»</strong><p>Перед подтверждением OBYOM предупреждает: другую модель по этой ссылке загрузить нельзя.</p></article><article class="step"><strong>Сотрудник проверяет и скачивает</strong><p>Проверяет внешний вид и версию, подтверждает модель и скачивает файл.</p></article></div></div></section>
+    <section id="pilot" aria-labelledby="pilot-title"><div class="section-intro"><p class="eyebrow">Первый пилот</p><h2 id="pilot-title">Начните с одного реального заказа.</h2><p>OBYOM не заменяет ваш production workflow. Он закрывает конкретный момент: приём, просмотр и подтверждение STL перед дальнейшей обработкой.</p></div><div class="feature-grid"><article class="feature"><strong>Браузер вместо CAD</strong><p>Клиент и сотрудник смотрят модель без установки дополнительного ПО.</p></article><article class="feature"><strong>Одна версия в фокусе</strong><p>Статус заказа и файл остаются связаны с одной ссылкой.</p></article><article class="feature"><strong>Данные мастерской отдельно</strong><p>Личный кабинет показывает только свои заказы, ссылки и историю.</p></article></div></section>
+    <section aria-labelledby="confirm-title"><div class="final"><div class="section-intro"><p class="eyebrow">Результат</p><h2 id="confirm-title">Обе стороны видят, что модель принята.</h2><p>После проверки сотрудником клиент при повторном открытии ссылки видит статус «Подтверждено сотрудником». Скачивание файла и дальнейшее производство остаются у мастерской.</p><a class="button button-primary" href="mailto:3axap777@vk.com">Обсудить пилот</a></div><div class="confirm-card"><div class="confirm-row"><span>Заказ</span><b>#OB-1042</b></div><div class="confirm-row"><span>Модель</span><b>Корпус камеры</b></div><div class="confirm-row"><span>Версия</span><b>camera-body-v3.stl</b></div><div class="confirm-row"><span>Статус</span><span class="confirm-mark">✓</span></div></div></div></section>
+  </main>
+  <footer class="footer"><span>OBYOM · браузерное подтверждение STL-моделей</span><span><a href="index.html">Главная</a> · <a href="mailto:3axap777@vk.com">3axap777@vk.com</a></span></footer>
+</div>
+<script src="site-e435ae9.js"></script>
+<script>
+(() => {
+  const root = document.documentElement;
+  const themeButton = document.getElementById('theme-toggle');
+  const menuButton = document.getElementById('menu-toggle');
+  const nav = document.getElementById('landing-nav');
+  const stored = localStorage.getItem('obyom-landing-theme');
+  if (stored === 'light') root.dataset.theme = 'light';
+  const syncTheme = () => {
+    const light = root.dataset.theme === 'light';
+    themeButton?.setAttribute('aria-pressed', String(light));
+    themeButton?.setAttribute('aria-label', light ? 'Включить тёмную тему' : 'Включить светлую тему');
+    if (themeButton) themeButton.querySelector('.theme-label').textContent = light ? 'Тёмная тема' : 'Светлая тема';
+    if (themeButton) themeButton.querySelector('span:first-child').textContent = light ? '◐' : '☼';
+  };
+  syncTheme();
+  themeButton?.addEventListener('click', () => {
+    root.classList.add('theme-transition');
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('obyom-landing-theme', root.dataset.theme);
+    syncTheme();
+    setTimeout(() => root.classList.remove('theme-transition'), 240);
+  });
+  menuButton?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    menuButton.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+    nav.classList.remove('is-open');
+    menuButton?.setAttribute('aria-expanded', 'false');
+  }));
+})();
+</script>
+</body>
+</html>
