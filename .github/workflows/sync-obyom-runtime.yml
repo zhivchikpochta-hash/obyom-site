@@ -82,11 +82,12 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import os, re
-          path = Path('index.html')
-          text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="site-{os.environ["RUNTIME_VERSION"]}.js"></script>', path.read_text())
-          if count != 1:
-              raise SystemExit(f'Expected one site script tag, found {count}')
-          path.write_text(text)
+          for path in Path('.').glob('*.html'):
+              text = path.read_text()
+              text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="site-{os.environ["RUNTIME_VERSION"]}.js"></script>', text)
+              if count:
+                  path.write_text(text)
+                  print(f'Updated {path}: {count} runtime reference(s)')
           PY
 
       - name: Add static landing page to the deployed site
