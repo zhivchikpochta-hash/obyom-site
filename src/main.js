@@ -49,6 +49,7 @@ function showConfig() {
 }
 
 let viewer = null;
+let startRun = 0;
 
 function withTimeout(promise, label) {
   return Promise.race([
@@ -59,6 +60,7 @@ function withTimeout(promise, label) {
 
 async function start() {
   if (!canvas) return;
+  const run = ++startRun;
   viewer?.destroy();
   viewer = null;
   showConfig();
@@ -71,12 +73,18 @@ async function start() {
 
   setStatus(translate('loadingPackage'), 'loading');
   try {
-    viewer = new OBYOM(options);
-    await withTimeout(viewer.start(), 'WebGPU initialization');
-    await withTimeout(viewer.load(modelPath), 'Model loading');
+    const instance = new OBYOM(options);
+    viewer = instance;
+    await withTimeout(instance.start(), 'WebGPU initialization');
+    if (run !== startRun || viewer !== instance) return;
+    await withTimeout(instance.load(modelPath), 'Model loading');
+    if (run !== startRun || viewer !== instance) return;
     setStatus(translate('ready'), 'ready');
     message?.remove();
   } catch (error) {
+    if (run !== startRun) return;
+    viewer?.destroy();
+    viewer = null;
     console.error('Failed to initialize OBYOM viewer', error);
     setStatus(translate('failed'), 'error');
     if (message) message.textContent = translate('failedMessage');
