@@ -1,65 +1,233 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="OBYOM помогает мастерским 3D-печати принять STL от клиента, проверить модель в браузере и подтвердить нужную версию.">
-  <meta name="robots" content="index,follow">
+  <meta name="description" content="OBYOM is a WebGPU 3D viewer and JavaScript library for interactive STL and 3D model previews directly in the browser.">
   <link rel="icon" type="image/svg+xml" href="assets/obyom-logo.svg">
   <link rel="canonical" href="https://obyom.org/landing.html">
-  <title>OBYOM — подтвердите нужную STL-модель до печати</title>
-  <style>
-    :root{color-scheme:dark;--bg:#10151b;--surface:#171d24;--surface-2:#1d2630;--line:#30404c;--text:#f4f7f9;--muted:#a8b6bf;--subtle:#71818c;--accent:#f26a21;--accent-hover:#ff8542;--accent-soft:#3a2117;--green:#53c889;--green-soft:#123426;--radius-sm:8px;--radius-md:12px;--radius-lg:18px;--radius-xl:24px;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-24:96px;}
-    *{box-sizing:border-box}html{scroll-behavior:auto;overflow-x:clip}body{margin:0;min-width:320px;max-width:100vw;overflow-x:clip;background:var(--bg);color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}.wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;z-index:10;background:#fff;color:#10151b;padding:10px}.header{height:80px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.header-actions{display:flex;align-items:center;gap:14px}.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;letter-spacing:.12em;font-size:14px;font-weight:800}.brand img{width:30px;height:30px}.nav{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:650;color:var(--muted)}.nav a{text-decoration:none}.nav a:hover{color:var(--text)}.nav-cta{padding:9px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--text)!important}.nav-cta:hover{border-color:var(--accent);color:var(--accent-hover)!important}.theme-toggle,.menu-toggle{min-height:40px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}.theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:0 11px;color:var(--muted);font-size:12px}.theme-toggle:hover,.menu-toggle:hover{border-color:var(--accent);color:var(--accent-hover)}.theme-toggle span:first-child{font-size:18px;line-height:1}.menu-toggle{display:none;width:40px;padding:9px}.menu-toggle i{display:block;height:1px;margin:4px 0;background:currentColor}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.eyebrow{margin:0 0 16px;color:var(--accent-hover);font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:center;padding:112px 0 120px;border-bottom:1px solid var(--line)}h1,h2,h3,p{margin-top:0}h1{max-width:700px;margin-bottom:24px;font-size:clamp(44px,6.2vw,78px);line-height:.98;letter-spacing:-.06em}h2{margin-bottom:16px;font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.05em}h3{margin-bottom:8px;font-size:20px;line-height:1.15;letter-spacing:-.03em}.lead{max-width:620px;color:var(--muted);font-size:20px;line-height:1.5}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.button{min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:0 18px;border:1px solid transparent;border-radius:var(--radius-sm);font-weight:750;text-decoration:none}.button-primary{background:var(--accent);color:#180b05}.button-primary:hover{background:var(--accent-hover)}.button-secondary{border-color:var(--line);color:var(--text)}.button-secondary:hover{border-color:var(--accent);color:var(--accent-hover)}.proof{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px;color:var(--subtle);font-size:13px}.proof span{display:inline-flex;align-items:center;gap:8px}.proof i{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block}.hero-panel{position:relative;border:1px solid var(--line);border-radius:var(--radius-xl);background:var(--surface);padding:20px;box-shadow:0 24px 64px rgba(0,0,0,.22)}.window-top{display:flex;align-items:center;justify-content:space-between;padding:0 2px 16px;color:var(--subtle);font-size:12px}.window-dots{display:flex;gap:5px}.window-dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}.real-viewer{position:relative;aspect-ratio:1 / .82;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-lg);background:#0c1116}.real-viewer canvas{display:block;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none}.real-viewer .message{position:absolute;inset:50% 20px auto;transform:translateY(-50%);margin:0;color:var(--text);font-size:13px;font-weight:650;text-align:center}.viewer-status{display:flex;align-items:center;gap:7px;margin-top:14px;color:var(--muted);font-size:12px}.viewer-status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(242,106,33,.14)}.viewer-caption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;color:var(--muted);font-size:12px}.viewer-caption b{color:var(--text)}section{padding:112px 0;border-bottom:1px solid var(--line)}.section-intro{max-width:680px;margin-bottom:40px}.section-intro p:not(.eyebrow){color:var(--muted);font-size:18px}.problem-grid,.feature-grid,.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line)}.problem,.feature,.step{min-height:190px;padding:28px;background:var(--surface)}.problem strong,.feature strong,.step strong{display:block;margin-bottom:34px;color:var(--accent-hover);font-size:13px;letter-spacing:.1em;text-transform:uppercase}.problem p,.feature p,.step p{margin:0;color:var(--muted)}.feature strong{font-size:18px;letter-spacing:-.02em;text-transform:none;color:var(--text);margin-bottom:12px}.how{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}.steps{counter-reset:step}.step{min-height:0}.step strong{margin:0;color:var(--text);font-size:18px;letter-spacing:-.02em;text-transform:none}.step p{margin-top:12px}.final{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}.confirm-card{border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);padding:28px}.confirm-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}.confirm-row:last-child{border-bottom:0;padding-bottom:0}.confirm-row:first-child{padding-top:0}.confirm-row span{color:var(--muted);font-size:14px}.confirm-row b{font-size:14px}.confirm-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-size:22px}.footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px 0 48px;color:var(--subtle);font-size:13px}.footer a{text-decoration:none}.footer a:hover{color:var(--accent-hover)}
-    @media (max-width:900px){.hero{grid-template-columns:1fr;gap:48px;padding:88px 0 96px}.hero-panel{max-width:640px}.how,.final{grid-template-columns:1fr;gap:40px}.nav{gap:14px}.nav a:not(.nav-cta){display:none}.theme-toggle .theme-label{display:none}.menu-toggle{display:block}.header-actions{gap:8px}.nav{position:absolute;top:76px;right:24px;left:24px;display:none;padding:10px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface);box-shadow:0 18px 40px rgba(0,0,0,.25)}.nav.is-open{display:grid;gap:4px}.nav.is-open a{display:block;padding:12px}.nav.is-open .nav-cta{text-align:center}}
-    @media (max-width:640px){.wrap{width:min(100% - 32px,1160px)}.header{height:68px}.brand img{width:26px;height:26px}.hero{grid-template-columns:minmax(0,1fr);padding:72px 0 80px}h1{font-size:clamp(40px,14vw,62px)}.lead{font-size:18px}.problem-grid,.feature-grid,.steps{grid-template-columns:1fr}.problem,.feature,.step{min-height:0;padding:24px}.problem strong{margin-bottom:22px}.step{}.final{gap:28px}section{padding:80px 0}.footer{display:grid;gap:12px}.order-head{display:grid}.status{justify-self:start}}
-    /* Hero spans the full viewport instead of being trapped inside the 1160px wrap. */
-    main > .hero{width:100vw;max-width:none;margin-left:calc(50% - 50vw);padding-left:max(24px,calc((100vw - 1160px)/2));padding-right:max(24px,calc((100vw - 1160px)/2))}
-    .problem-section{position:relative;isolation:isolate;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);padding-left:max(24px,calc((100vw - 1160px)/2));padding-right:max(24px,calc((100vw - 1160px)/2));background:#10151b}.problem-shader{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9;pointer-events:none}.problem-content,.problem-section>.problem-grid{position:relative;z-index:1}.problem-section>.problem-grid{background:rgba(48,64,76,.72)}.problem-section .problem{background:rgba(23,29,36,.86);backdrop-filter:blur(8px)}html[data-theme="light"] .problem-section{background:#10151b}.problem-section .problem-shader{opacity:.9}html[data-theme="light"] .problem-section .problem-content{color:#f4f7f9}html[data-theme="light"] .problem-section .problem-content p{color:#a8b6bf}html[data-theme="light"] .problem-section>.problem-grid{background:rgba(48,64,76,.72)}html[data-theme="light"] .problem-section .problem{background:rgba(23,29,36,.86);color:#f4f7f9}html[data-theme="light"] .problem-section .problem p{color:#a8b6bf}
-    .result-section{position:relative;isolation:isolate;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);padding-left:max(24px,calc((100vw - 1160px)/2));padding-right:max(24px,calc((100vw - 1160px)/2));background:#050505}.result-wireframe{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.88}.result-content{position:relative;z-index:1}.result-section .confirm-card{background:rgba(9,9,11,.72);backdrop-filter:blur(5px)}html[data-theme="light"] .result-section{background:#eef1f6}.result-section .result-wireframe{opacity:.32}html[data-theme="light"] .result-section .confirm-card{background:rgba(255,255,255,.78)}
-    .site-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0 32px;border-top:1px solid var(--line);color:var(--subtle);font-size:13px}.footer-contacts,.footer-credit{display:flex;flex-wrap:wrap;align-items:center;gap:16px}.site-footer a{color:var(--muted);text-decoration:none}.site-footer a:hover{color:var(--accent-hover)}
-    @media (max-width:640px){.site-footer{align-items:flex-start;flex-direction:column;gap:12px}}
-    html[data-theme="light"]{color-scheme:light;--bg:#f5f7f8;--surface:#ffffff;--surface-2:#edf1f3;--line:#d7e0e5;--text:#10151b;--muted:#52636f;--subtle:#71818c;--accent:#f26a21;--accent-hover:#d95716;--accent-soft:#fff0e8;--green:#16794a;--green-soft:#e7f6ee}
-    html[data-theme="light"] body{background:var(--bg);color:var(--text)}
-    html[data-theme="light"] .hero-panel,html[data-theme="light"] .problem,html[data-theme="light"] .feature,html[data-theme="light"] .step,html[data-theme="light"] .confirm-card{box-shadow:0 18px 45px rgba(16,21,27,.06)}
-.process-cards{position:relative;display:block;padding:24px 0 96px}.process-card-shell{display:contents}.process-card{position:sticky;top:112px;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:38px;height:310px;margin:0 0 -16px;padding:30px;border:1px solid color-mix(in srgb,var(--line) 86%,transparent);border-radius:var(--radius-xl);background:color-mix(in srgb,var(--surface) 96%,transparent);box-shadow:0 24px 70px rgba(0,0,0,.22);overflow:hidden;transform-origin:50% 0;will-change:transform;transition:box-shadow .2s ease}.process-card-shell:nth-child(1) .process-card{z-index:1}.process-card-shell:nth-child(2) .process-card{z-index:2}.process-card-shell:nth-child(3) .process-card{z-index:3}.process-card-shell:nth-child(4) .process-card{z-index:4}.process-card-copy{position:relative;z-index:2;align-self:end}.process-card-index{display:block;margin-bottom:42px;color:var(--accent-hover);font:800 11px/1 Inter,ui-sans-serif,system-ui;letter-spacing:.16em;text-transform:uppercase}.process-card strong{display:block;margin:0;max-width:18ch;color:var(--text);font-size:clamp(22px,2.8vw,34px);line-height:1.02;letter-spacing:-.045em}.process-card p{max-width:40ch;margin:14px 0 0;color:var(--muted)}.process-graphic{position:relative;align-self:stretch;min-height:198px;border:1px solid color-mix(in srgb,var(--line) 75%,transparent);border-radius:18px;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 62%),color-mix(in srgb,var(--bg) 82%,transparent);color:var(--accent);overflow:hidden}.process-graphic:after{content:"";position:absolute;inset:12px;border:1px solid currentColor;border-radius:12px;opacity:.12;pointer-events:none}.process-graphic svg{position:relative;z-index:1;display:block;width:100%;height:100%;overflow:visible}.process-graphic .draw{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:260;stroke-dashoffset:260;animation:process-draw 4.2s cubic-bezier(.2,.7,.2,1) infinite alternate}.process-graphic .draw-thin{fill:none;stroke:currentColor;stroke-width:.8;opacity:.42;stroke-dasharray:4 8;animation:process-drift 8s linear infinite}.process-graphic .pulse{fill:currentColor;filter:drop-shadow(0 0 6px currentColor);animation:process-pulse 2.2s ease-in-out infinite}.process-graphic .muted{fill:none;stroke:var(--line);stroke-width:1}.process-graphic .soft{fill:none;stroke:currentColor;stroke-width:1;opacity:.3}.process-card-shell:nth-child(2) .process-graphic{color:#53c889}.process-card-shell:nth-child(3) .process-graphic{color:#7da7ff}.process-card-shell:nth-child(4) .process-graphic{color:var(--accent-hover)}@keyframes process-draw{to{stroke-dashoffset:0}}@keyframes process-drift{to{stroke-dashoffset:-48}}@keyframes process-pulse{0%,100%{opacity:.35;transform:scale(.72);transform-origin:center}50%{opacity:1;transform:scale(1.2);transform-origin:center}}html[data-theme="light"] .process-card{background:color-mix(in srgb,var(--surface) 98%,transparent)}
-    @media (max-width:900px) and (min-width:701px){.process-card{height:300px;margin-bottom:-15px}}
-    @media (max-width:700px){.process-cards{padding:8px 0 80px}.process-card{top:82px;margin-bottom:-21px;height:420px;grid-template-columns:1fr;gap:18px;min-height:0;padding:22px}.process-card-copy{align-self:auto}.process-card-index{margin-bottom:24px}.process-card strong{font-size:25px}.process-graphic{height:180px;min-height:180px}}
-
-    @media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.process-graphic .draw{animation:none;stroke-dashoffset:0}.process-graphic .pulse{animation:none}}
-  </style>
+  <meta property="og:title" content="OBYOM — WebGPU 3D Viewer for the Browser">
+  <meta property="og:description" content="OBYOM is a WebGPU 3D viewer and JavaScript library for interactive STL and 3D model previews directly in the browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://obyom.org/landing.html">
+  <meta property="og:image" content="https://obyom.org/landing.htmlassets/obyom-logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "OBYOM",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "WebGPU 3D viewer",
+    "operatingSystem": "Web Browser",
+    "url": "https://obyom.org/landing.html",
+    "description": "WebGPU 3D viewer and JavaScript library for interactive STL and 3D model previews in the browser.",
+    "softwareVersion": "0.1.0",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+  }
+  </script>
+  <link rel="stylesheet" href="styles-v2.css">
+  <title>OBYOM — WebGPU 3D Viewer for the Browser</title>
 </head>
 <body>
-<a class="skip" href="#main">Перейти к содержимому</a>
-<div class="wrap">
-  <header class="header">
-    <a class="brand" href="index.html" aria-label="OBYOM — главная"><img src="assets/obyom-logo.svg" alt=""><span>OBYOM</span></a>
+  <main class="page">
+    <header class="header">
+    <a class="brand" href="index.html" aria-label="OBYOM home">
+      <img src="assets/obyom-logo.svg" alt="">
+      <strong>OBYOM</strong>
+    </a>
     <div class="header-actions">
-      <nav class="nav" id="landing-nav" aria-label="Основная навигация"><a href="#how">Как это работает</a><a class="nav-cta" href="mailto:3axap777@vk.com">Связаться</a></nav>
-      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Включить светлую тему" aria-pressed="false"><span aria-hidden="true">☼</span><span class="theme-label">Светлая тема</span></button>
-      <button class="menu-toggle" type="button" id="menu-toggle" aria-controls="landing-nav" aria-expanded="false"><span class="sr-only">Открыть меню</span><i></i><i></i><i></i></button>
+      <nav class="nav" id="landing-nav" aria-label="Primary navigation">
+        <a data-nav-demo href="demo.html">Demo</a>
+        <a data-nav-guide href="get-started.html">For developers</a>
+        <a data-nav-workshops href="for-clients.html">For workshops</a>
+        <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">RU</button>
+        <a data-nav-source href="https://gitflic.ru/project/3axap777/obyom" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
+      </nav>
+      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch to light theme" aria-pressed="false"><span aria-hidden="true">☼</span><span class="theme-label">Light theme</span></button>
+      <button class="menu-toggle" type="button" id="menu-toggle" aria-controls="landing-nav" aria-expanded="false"><span class="sr-only">Open menu</span><i></i><i></i><i></i></button>
     </div>
   </header>
-  <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div><p class="eyebrow">Для мастерских 3D-печати</p><h1>Подтвердите нужную модель до печати.</h1><p class="lead">OBYOM даёт клиенту ссылку для загрузки STL, показывает модель в браузере и помогает мастерской подтвердить именно ту версию, которая пойдёт дальше в работу.</p><div class="proof"><span><i></i>Без CAD для клиента</span><span><i></i>STL до 100 МБ</span><span><i></i>Ссылка на 7 дней</span></div></div>
-      <div class="hero-panel" aria-label="Интерактивный preview OBYOM"><div class="window-top"><span>obyom / order #OB-1042</span><span class="window-dots"><i></i><i></i><i></i></span></div><div class="real-viewer"><canvas id="pilot-viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl" data-model-label="OBYOM Logo" aria-label="Интерактивная 3D-модель OBYOM"></canvas><p class="message" id="pilot-message">Загрузка preview…</p></div><div class="viewer-status" id="pilot-status">Проверка поддержки WebGPU…</div><div class="viewer-caption"><span>STL <b>OBYOM_LOGO.stl</b></span><span>Интерактивный preview</span></div></div>
-    </section>
-    <section class="problem-section" aria-labelledby="problem-title"><canvas class="problem-shader" aria-hidden="true"></canvas><div class="section-intro problem-content"><p class="eyebrow">Проблема</p><h2 id="problem-title">Мессенджер не фиксирует, какая модель правильная.</h2><p>Клиент может прислать не тот STL, а сотруднику придётся открыть файл на десктопе и разбираться с версиями вручную.</p></div><div class="problem-grid"><article class="problem"><h3>Лишнее время</h3><p>Чтобы просто посмотреть модель, сотруднику нужно открыть её в отдельном приложении.</p></article><article class="problem"><h3>Неправильная версия</h3><p>В переписке легко потерять контекст и перепутать последний файл с предыдущим.</p></article><article class="problem"><h3>Ошибка обнаруживается поздно</h3><p>Клиент может не понять, что отправил не ту модель, пока мастерская уже не начала работу.</p></article></div></section>
-    <section id="how" aria-labelledby="how-title"><div class="how"><div class="section-intro"><p class="eyebrow">Один понятный процесс</p><h2 id="how-title">От ссылки до подтверждённой версии.</h2><p>В пилоте мастерская создаёт ссылку вручную. Клиент и сотрудник последовательно смотрят на одну модель.</p></div><div class="process-cards"><article class="process-card-shell"><div class="process-card"><div class="process-card-copy"><span class="process-card-index">Шаг 1</span><strong>Мастерская создаёт ссылку</strong><p>Название, номер заказа и описание модели. Ссылка действует 7 дней.</p></div><div class="process-graphic" aria-hidden="true"><svg viewBox="0 0 240 180"><g transform="rotate(-18 120 90)"><path class="muted" d="M28 90h184"/><path class="draw" d="M52 90c0-18 14-32 32-32h24c18 0 32 14 32 32s-14 32-32 32H84c-18 0-32-14-32-32Z"/><path class="draw" d="M100 90c0-18 14-32 32-32h24c18 0 32 14 32 32s-14 32-32 32h-24c-18 0-32-14-32-32Z"/><path class="draw-thin" d="M92 90h56"/><circle class="soft" cx="52" cy="90" r="4"/><circle class="soft" cx="188" cy="90" r="4"/></g></svg></div></div></article><article class="process-card-shell"><div class="process-card"><div class="process-card-copy"><span class="process-card-index">Шаг 2</span><strong>Клиент загружает STL</strong><p>Без регистрации и авторизации. Модель сразу появляется в браузере.</p></div><div class="process-graphic" aria-hidden="true"><svg viewBox="0 0 240 180"><path class="muted" d="M28 132h184M120 24v108"/><path class="soft" d="M80 78l40-30 40 30-40 30z"/><path class="draw" d="M120 48v80m-40-50 40 30 40-30M80 78l40 30 40-30"/><path class="draw-thin" d="M42 42h46m-23-15v30M152 42h46"/></svg></div></div></article><article class="process-card-shell"><div class="process-card"><div class="process-card-copy"><span class="process-card-index">Шаг 3</span><strong>Клиент нажимает «Подтвердить»</strong><p>Перед подтверждением OBYOM предупреждает: другую модель по этой ссылке загрузить нельзя.</p></div><div class="process-graphic" aria-hidden="true"><svg viewBox="0 0 240 180"><rect class="muted" x="58" y="24" width="124" height="132" rx="18"/><path class="soft" d="M78 64h84M78 92h52"/><path class="draw" d="M78 112l24 24 54-62"/><circle class="pulse" cx="156" cy="64" r="5"/></svg></div></div></article><article class="process-card-shell"><div class="process-card"><div class="process-card-copy"><span class="process-card-index">Шаг 4</span><strong>Сотрудник проверяет и скачивает</strong><p>Проверяет внешний вид и версию, подтверждает модель и скачивает файл.</p></div><div class="process-graphic" aria-hidden="true"><svg viewBox="0 0 240 180"><path class="muted" d="M28 138h184M120 20v118"/><path class="draw" d="M72 68h96M120 32v78m-25-25 25 25 25-25"/><path class="draw-thin" d="M58 92h40m44 0h40"/><circle class="pulse" cx="120" cy="110" r="5"/></svg></div></div></article></div></div></section>
-    <section id="pilot" aria-labelledby="pilot-title"><div class="section-intro"><p class="eyebrow">Первый пилот</p><h2 id="pilot-title">Начните с одного реального заказа.</h2><p>OBYOM не заменяет ваш production workflow. Он закрывает конкретный момент: приём, просмотр и подтверждение STL перед дальнейшей обработкой.</p></div><div class="feature-grid"><article class="feature"><strong>Браузер вместо CAD</strong><p>Клиент и сотрудник смотрят модель без установки дополнительного ПО.</p></article><article class="feature"><strong>Одна версия в фокусе</strong><p>Статус заказа и файл остаются связаны с одной ссылкой.</p></article><article class="feature"><strong>Данные мастерской отдельно</strong><p>Личный кабинет показывает только свои заказы, ссылки и историю.</p></article></div></section>
-    <section class="result-section" aria-labelledby="confirm-title"><canvas class="result-wireframe" aria-hidden="true"></canvas><div class="final result-content"><div class="section-intro"><p class="eyebrow">Результат</p><h2 id="confirm-title">Обе стороны видят, что модель принята.</h2><p>После проверки сотрудником клиент при повторном открытии ссылки видит статус «Подтверждено сотрудником». Скачивание файла и дальнейшее производство остаются у мастерской.</p></div><div class="confirm-card"><div class="confirm-row"><span>Заказ</span><b>#OB-1042</b></div><div class="confirm-row"><span>Модель</span><b>Корпус камеры</b></div><div class="confirm-row"><span>Версия</span><b>camera-body-v3.stl</b></div><div class="confirm-row"><span>Статус</span><span class="confirm-mark">✓</span></div></div></div></section>
-  </main>
-  <footer class="site-footer"><div class="footer-contacts"><a href="mailto:3axap777@vk.com" data-footer-email>Contact by email</a><a href="https://t.me/iopa3axap777" target="_blank" rel="noreferrer" data-footer-telegram>Telegram</a></div><div class="footer-credit"><span data-footer-developed>Developed by 3axap777</span><span>© 2026</span></div></footer>
-</div>
-<script src="site-1a7ee33064a6.js"></script>
-<script>
-(()=>{const c=document.querySelector('.problem-shader');if(!c)return;const g=c.getContext('webgl',{alpha:false,antialias:false});if(!g)return;const v='attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}',f='precision mediump float;uniform vec2 r;uniform float t;uniform vec2 m;uniform float active;float hash21(vec2 p){p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);return mix(mix(hash21(i),hash21(i+vec2(1,0)),u.x),mix(hash21(i+vec2(0,1)),hash21(i+vec2(1,1)),u.x),u.y);}float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p=p*2.03+vec2(17.,9.2);a*=.5;}return v;}vec3 shade(vec2 p,float time){vec2 q=p*2.02;float field=0.,weight=.55;for(int i=0;i<6;i++){float fi=float(i);q+=vec2(sin(q.y*(1.7+fi*.09)+time*(.35+fi*.04)+1372.),cos(q.x*(1.5+fi*.11)-time*(.28+fi*.03)))*.269;float filaments=abs(sin(q.x+q.y+fi*.72));field+=weight/(.08+filaments);weight*=.62;q=q.yx*vec2(-1.08,1.04);}float glow=1.-exp(-field*.032);vec3 dark=vec3(.002,.006,.012),orange=vec3(1.,.25,.035),red=vec3(.49,.184,.184);return mix(dark,mix(orange,red,smoothstep(.42,.82,glow)),smoothstep(.06,.42,glow));}void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=(gl_FragCoord.xy-.5*r)/min(r.x,r.y);vec2 cursor=(.5*m*r)/min(r.x,r.y),delta=p-cursor;float mask=active*(1.-smoothstep(0.,.487,length(delta)));p-=(delta/max(length(delta),.0001))*mask*.4*.24;vec3 col=shade(p,t);col+=(vec3(.18)+col*.12)*mask*.4;float vignette=smoothstep(.35,1.,length(uv-.5)*1.4142);col*=1.-.08*vignette;gl_FragColor=vec4(clamp(col,0.,1.),1.);}';const make=(type,src)=>{const x=g.createShader(type);g.shaderSource(x,src);g.compileShader(x);return x},vs=make(g.VERTEX_SHADER,v),fs=make(g.FRAGMENT_SHADER,f);const p=g.createProgram();g.attachShader(p,vs);g.attachShader(p,fs);g.linkProgram(p);g.useProgram(p);const b=g.createBuffer();g.bindBuffer(g.ARRAY_BUFFER,b);g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),g.STATIC_DRAW);const loc=g.getAttribLocation(p,'p');g.enableVertexAttribArray(loc);g.vertexAttribPointer(loc,2,g.FLOAT,false,0,0);const ur=g.getUniformLocation(p,'r'),ut=g.getUniformLocation(p,'t'),um=g.getUniformLocation(p,'m'),ua=g.getUniformLocation(p,'active');let mx=.5,my=.5,targetX=.5,targetY=.5,inside=false;const move=e=>{const z=c.getBoundingClientRect();targetX=(e.clientX-z.left)/z.width;targetY=1-(e.clientY-z.top)/z.height;inside=true};c.addEventListener('pointermove',move);c.addEventListener('pointerleave',()=>{inside=false});const start=performance.now();function draw(now){const d=Math.min(devicePixelRatio||1,2),w=Math.max(1,Math.round(c.clientWidth*d)),h=Math.max(1,Math.round(c.clientHeight*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h;g.viewport(0,0,w,h)}if(!inside){targetX=.5;targetY=.5}mx+=(targetX-mx)*.07;my+=(targetY-my)*.07;g.uniform2f(ur,w,h);g.uniform1f(ut,(now-start)/1000);g.uniform2f(um,mx,my);g.uniform1f(ua,inside?1:0);g.drawArrays(g.TRIANGLES,0,3);requestAnimationFrame(draw)}draw(performance.now());addEventListener('pagehide',()=>{c.removeEventListener('pointermove',move)},{once:true})})();
-</script>
-<script>
-(()=>{const c=document.querySelector('.result-wireframe');if(!c)return;const x=c.getContext('2d');if(!x)return;const pts=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],edges=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];let a=0,raf=0;function draw(){const d=Math.min(devicePixelRatio||1,2),w=Math.max(1,Math.round(c.clientWidth*d)),h=Math.max(1,Math.round(c.clientHeight*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h}x.setTransform(d,0,0,d,0,0);const W=c.clientWidth,H=c.clientHeight;x.clearRect(0,0,W,H);x.fillStyle='#050505';x.fillRect(0,0,W,H);const scale=Math.min(W,H)*.24,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(a*.63),sb=Math.sin(a*.63),project=p=>{let X=p[0]*ca-p[2]*sa,Z=p[2]*ca+p[0]*sa,Y=p[1]*cb-Z*sb;Z=Z*cb+p[1]*sb;const f=3/(3+Z);return [W/2+X*scale*f,H/2+Y*scale*f]};const q=pts.map(project);x.lineWidth=1;x.strokeStyle='rgba(255,255,255,.52)';edges.forEach(e=>{x.beginPath();x.moveTo(...q[e[0]]);x.lineTo(...q[e[1]]);x.stroke()});x.fillStyle='rgba(242,106,33,.9)';q.forEach(p=>{x.beginPath();x.arc(p[0],p[1],2,0,Math.PI*2);x.fill()});a+=.006;raf=requestAnimationFrame(draw)}draw();addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true})})();
-</script>
 
+    <section class="manifesto" aria-label="OBYOM integration statement">
+      <p class="manifesto-intro"><span data-manifesto-prefix>Add</span> <strong>OBYOM</strong> <span data-manifesto-suffix>in your</span></p>
+      <ul class="manifesto-list">
+        <li class="manifesto-card manifesto-card--site">
+          <div class="manifesto-art" aria-hidden="true">
+            <svg viewBox="0 0 240 150" role="presentation">
+              <rect class="art-frame" x="27" y="23" width="186" height="104" rx="8"/>
+              <path class="art-line" d="M27 50h186M49 37h2M59 37h2M69 37h2"/>
+              <path class="art-chart" d="M51 99 78 75l24 17 31-38 34 28"/>
+              <circle class="art-node" cx="51" cy="99" r="4"/><circle class="art-node" cx="78" cy="75" r="4"/>
+              <circle class="art-node" cx="102" cy="92" r="4"/><circle class="art-node" cx="133" cy="54" r="4"/>
+              <circle class="art-node" cx="167" cy="82" r="4"/>
+              <circle class="art-pulse" cx="133" cy="54" r="11"/>
+            </svg>
+          </div>
+          <strong class="manifesto-word">Site</strong>
+          <span class="manifesto-caption" data-manifesto-caption>A living entry point for your work.</span>
+        </li>
+        <li class="manifesto-card manifesto-card--project">
+          <div class="manifesto-art" aria-hidden="true">
+            <svg viewBox="0 0 240 150" role="presentation">
+              <path class="art-line" d="m120 18 70 39v65l-70 39-70-39V57l70-39Z"/>
+              <path class="art-line" d="m50 57 70 41 70-41M120 98v63M82 37l70 41"/>
+              <path class="art-orbit" d="M40 95c17-43 67-61 112-42 36 15 52 51 37 75-17 26-66 30-108 10-34-16-52-31-41-43Z"/>
+              <circle class="art-node" cx="120" cy="98" r="5"/><circle class="art-node art-node--small" cx="177" cy="64" r="3"/>
+            </svg>
+          </div>
+          <strong class="manifesto-word">Project</strong>
+          <span class="manifesto-caption" data-manifesto-caption>A model, a version, a shared direction.</span>
+        </li>
+        <li class="manifesto-card manifesto-card--solution">
+          <div class="manifesto-art" aria-hidden="true">
+            <svg viewBox="0 0 240 150" role="presentation">
+              <circle class="art-ring" cx="120" cy="75" r="51"/>
+              <circle class="art-ring art-ring--inner" cx="120" cy="75" r="29"/>
+              <path class="art-link" d="M120 75 47 38M120 75l73-37M120 75l73 37M120 75l-73 37"/>
+              <circle class="art-node" cx="47" cy="38" r="7"/><circle class="art-node" cx="193" cy="38" r="7"/>
+              <circle class="art-node" cx="193" cy="112" r="7"/><circle class="art-node" cx="47" cy="112" r="7"/>
+              <circle class="art-core" cx="120" cy="75" r="12"/>
+              <circle class="art-particle" cx="120" cy="75" r="2.5"/>
+            </svg>
+          </div>
+          <strong class="manifesto-word">Solution</strong>
+          <span class="manifesto-caption" data-manifesto-caption>The whole workflow, brought into focus.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">WebGPU 3D viewer</p>
+      <h1 id="hero-title">Show your 3D work to clients directly in the browser.</h1>
+      <p class="hero-copy">Create interactive previews for your portfolio or send a specific model for client approval — without asking anyone to install CAD software.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="demo.html">Try the demo <span aria-hidden="true">↓</span></a>
+
+      </div>
+    </section>
+
+    <section class="use-cases" aria-labelledby="use-cases-title">
+      <div class="section-heading">
+        <p class="eyebrow">Use cases</p>
+        <h2 id="use-cases-title">One viewer. Two ways to work with a client.</h2>
+      </div>
+      <div class="use-case-grid">
+        <article class="use-case-card">
+          <div class="use-case-art" aria-hidden="true">
+            <svg viewBox="0 0 520 170" role="presentation">
+              <rect class="use-art-window" x="24" y="22" width="472" height="126" rx="10"/>
+              <path class="use-art-browser" d="M24 54h472M48 38h3M62 38h3M76 38h3"/>
+              <path class="use-art-grid" d="M78 120h86M92 106h58M108 92h28"/>
+              <path class="use-art-model" d="M104 78 132 62l28 16v32l-28 16-28-16Z M104 78l28 17 28-17M132 95v31"/>
+              <path class="use-art-model use-art-model--second" d="m270 83 22-13 22 13v25l-22 13-22-13Z M270 83l22 13 22-13M292 96v25"/>
+              <circle class="use-art-node" cx="132" cy="95" r="5"/>
+              <circle class="use-art-node use-art-node--soft" cx="292" cy="96" r="4"/>
+              <path class="use-art-link" d="M168 95h76"/>
+              <path class="use-art-arrow" d="m233 89 11 6-11 6"/>
+              <path class="use-art-line" d="M370 78h80M370 95h58M370 112h66"/>
+            </svg>
+          </div>
+          <h3>Show your work</h3>
+          <p>Build an interactive portfolio or project page so clients can explore the shape instead of looking at screenshots.</p>
+        </article>
+        <article class="use-case-card">
+          <div class="use-case-art use-case-art--approval" aria-hidden="true">
+            <svg viewBox="0 0 520 170" role="presentation">
+              <circle class="use-art-person" cx="40" cy="67" r="12"/>
+              <path class="use-art-person-body" d="M20 111c4-22 36-22 40 0"/>
+              <circle class="use-art-person" cx="480" cy="67" r="12"/>
+              <path class="use-art-person-body" d="M460 111c4-22 36-22 40 0"/>
+              <path class="use-art-link" d="M62 82h64M394 82h64"/>
+              <path class="use-art-arrow" d="m116 76 10 6-10 6M404 76l-10 6 10 6"/>
+              <circle class="use-art-chain" cx="174" cy="82" r="16"/>
+              <path class="use-art-chain-mark" d="M166 88l16-12M166 76l16 12"/>
+              <path class="use-art-link" d="M190 82h70M330 82h34"/>
+              <path class="use-art-arrow" d="m250 76 10 6-10 6M354 76l10 6-10 6"/>
+              <path class="use-art-object" d="M260 64 294 44l34 20v37l-34 20-34-20Z M260 64l34 20 34-20M294 84v37"/>
+              <circle class="use-art-node" cx="294" cy="84" r="5"/>
+            </svg>
+          </div>
+          <h3>Get a model approved</h3>
+          <p>Send a private preview of a specific version, scale, and model so the approval is tied to exactly what goes into work.</p>
+        </article>
+      </div>
+        <p class="market-note" data-market-note>For Russian teams, OBYOM is a local foundation for replacing foreign 3D viewer components in client-facing workflows.</p>
+    </section>
+
+    <section class="viewer-card" aria-labelledby="viewer-title">
+      <div class="viewer-heading">
+        <p class="eyebrow">Interactive preview</p>
+        <p id="status" class="status" role="status" aria-live="polite"><span class="status-dot" aria-hidden="true"></span>Checking WebGPU support…</p>
+      </div>
+      <div class="canvas-frame">
+        <canvas id="viewer" data-obyom-viewer data-model-path="assets/3dmodels/stl/EDF+Rotor.stl" data-model-label="EDF+Rotor.stl" aria-label="Interactive 3D model preview"></canvas>
+        <p id="message" class="message">Loading viewer…</p>
+      </div>
+      <p class="hint"><span aria-hidden="true">↔</span> Drag to rotate the model. Touch gestures are supported.</p>
+
+    </section>
+
+    <section class="feature-grid" aria-label="Viewer features">
+      <div class="feature">
+        <strong>Runs in the browser</strong>
+        <span>No installation or CAD application required.</span>
+      </div>
+      <div class="feature">
+        <strong>Powered by WebGPU</strong>
+        <span>Modern GPU rendering for interactive previews.</span>
+      </div>
+      <div class="feature">
+        <strong>Simple to embed</strong>
+        <span>A small viewer core built for the web.</span>
+      </div>
+    </section>
+
+    <section class="pilot" id="pilot" aria-labelledby="pilot-title">
+      <div class="section-heading">
+        <p class="eyebrow">First pilot</p>
+        <h2 id="pilot-title">Turn one real model into a client-ready preview.</h2>
+      </div>
+      <ol class="pilot-steps">
+        <li><strong>Choose a model</strong><span>Start with one of your real projects or portfolio pieces.</span></li>
+        <li><strong>Share the preview</strong><span>Give a client an interactive page instead of a screenshot or CAD file.</span></li>
+        <li><strong>Confirm the version</strong><span>Keep the model, scale, and approval status tied to the same revision.</span></li>
+      </ol>
+
+    </section>
+
+    <section class="browser-support" aria-labelledby="browser-support-title">
+      <div class="browser-support-heading">
+        <div>
+          <p class="eyebrow">Compatibility</p>
+          <h2 id="browser-support-title">Supported browsers</h2>
+        </div>
+        <p class="browser-support-copy">Use a current browser with WebGPU enabled. Support depends on the browser, operating system, and GPU driver.</p>
+      </div>
+      <ul class="browser-grid">
+        <li class="browser-item"><strong>Google Chrome</strong><span>Desktop &amp; mobile</span></li>
+        <li class="browser-item"><strong>Safari</strong><span>macOS &amp; iOS</span></li>
+        <li class="browser-item"><strong>Microsoft Edge</strong><span>Desktop</span></li>
+        <li class="browser-item"><strong>Firefox</strong><span>Current releases</span></li>
+      </ul>
+      <div class="browser-versions">
+        <span class="feature-index">MINIMUM VERSIONS</span>
+        <ul class="browser-version-list">
+          <li><strong>Chrome 113+</strong><span>WebGPU enabled; Linux depends on hardware and drivers</span></li>
+          <li><strong>Edge 113+</strong><span>WebGPU enabled</span></li>
+          <li><strong>Safari 26+</strong><span>macOS 26+; WebGPU availability varies by platform</span></li>
+          <li><strong>Firefox 141+</strong><span>WebGPU enabled; default availability depends on the platform</span></li>
+        </ul>
+      </div>
+      <p class="browser-disclaimer">WebGPU support also depends on the operating system, GPU, drivers, and browser settings. Check <a href="https://caniuse.com/webgpu" target="_blank" rel="noopener noreferrer">Can I Use WebGPU</a> for current details.</p>
+    </section>
+
+
+    <footer class="site-footer">
+      <div class="footer-contacts"><a href="mailto:3axap777@vk.com" data-footer-email>Contact by email</a><a href="https://t.me/iopa3axap777" target="_blank" rel="noreferrer" data-footer-telegram>Telegram</a></div>
+      <div class="footer-credit"><span data-footer-developed>Developed by 3axap777</span><span>© 2026</span></div>
+    </footer>
+  </main>
 <script>
 (() => {
   const root = document.documentElement;
@@ -71,9 +239,11 @@
   const syncTheme = () => {
     const light = root.dataset.theme === 'light';
     themeButton?.setAttribute('aria-pressed', String(light));
-    themeButton?.setAttribute('aria-label', light ? 'Включить тёмную тему' : 'Включить светлую тему');
-    if (themeButton) themeButton.querySelector('.theme-label').textContent = light ? 'Тёмная тема' : 'Светлая тема';
-    if (themeButton) themeButton.querySelector('span:first-child').textContent = light ? '◐' : '☼';
+    themeButton?.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+    const label = themeButton?.querySelector('.theme-label');
+    if (label) label.textContent = light ? 'Dark theme' : 'Light theme';
+    const icon = themeButton?.querySelector('span:first-child');
+    if (icon) icon.textContent = light ? '◐' : '☼';
   };
   syncTheme();
   themeButton?.addEventListener('click', () => {
@@ -93,5 +263,8 @@
   }));
 })();
 </script>
+  <script src="i18n.js"></script>
+  <script src="site-1a7ee33064a6.js"></script>
+  <link rel="stylesheet" href="styles-v2.css">
 </body>
 </html>
