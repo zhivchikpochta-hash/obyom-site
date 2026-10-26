@@ -99,10 +99,10 @@ jobs:
           RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
         run: |
           test -s "site-${RUNTIME_VERSION}.js"
-          test -s "assets/3dmodels/stl/EDF+Rotor.stl"
+          test -s "assets/3dmodels/stl/pumpkin_face.stl"
           node --check "site-${RUNTIME_VERSION}.js"
           grep -Fq 'new OBYOM' "site-${RUNTIME_VERSION}.js"
-          grep -Fq 'assets/3dmodels/stl/EDF+Rotor.stl' "site-${RUNTIME_VERSION}.js"
+          grep -Fq 'assets/3dmodels/stl/pumpkin_face.stl' "site-${RUNTIME_VERSION}.js"
           grep -Fq "script src=\"site-${RUNTIME_VERSION}.js\"" index.html
 
       - name: Remove obsolete runtime artifacts
