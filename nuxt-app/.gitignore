@@ -1,0 +1,6 @@
+# Nuxt migration workspace
+.nuxt/
+.output/
+node_modules/
+.env*
+!.env.example
