@@ -7,7 +7,7 @@
     "check": "webpack --mode production --stats errors-only"
   },
   "dependencies": {
-    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#4034e70fc60dcec930fc15a5ea5df3a2ee117b98"
+    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#1025de4e1c4fe22f1a9202296f9055d745f17dec"
   },
   "engines": {
     "node": ">=22.23.4",
