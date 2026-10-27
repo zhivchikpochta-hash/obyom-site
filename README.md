@@ -32,24 +32,24 @@ WebGPU availability depends on the browser, operating system, GPU, drivers, and 
 
 Requirements:
 
-- Node.js **20.9+**
+- Node.js **22.23.4+**
 - npm **10+**
 - A browser with WebGPU enabled
 
-Install dependencies and build the site:
+Install dependencies and generate the static Nuxt site:
 
 ```bash
 npm install
-npm run build
+npm run generate
 ```
 
-The build writes the generated runtime to the repository root. Serve the directory through HTTP rather than opening `index.html` directly:
+The static build is written to `.output/public`. Serve that directory through HTTP rather than opening an HTML file directly:
 
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8080 --directory .output/public
 ```
 
-Then open <http://localhost:8080> in a WebGPU-capable browser.
+Then open <http://localhost:8080> in a WebGPU-capable browser. For an interactive development server with hot reload, use `npm run dev` instead.
 
 ## Viewer integration
 
@@ -83,35 +83,33 @@ The workshop pilot landing page is available at [`landing.html`](landing.html). 
 
 ```text
 .
-├── index.html                         Landing page and viewer markup
-├── get-started.html                   Installation and integration guide
-├── i18n.js                             Browser-locale content switching
-├── styles.css                         Site layout, theme, and responsive styles
-├── src/main.js                        OBYOM integration and demo controller
-├── webpack.config.js                  Site build configuration
-├── assets/3dmodels/stl/EDF+Rotor.stl  Site-owned demo model
-├── assets/                            Logo and favicon assets
-├── site-<revision>.js                 Generated site runtime
-└── shaders/webgpu/                    Generated OBYOM shader assets
+├── app.vue                            Nuxt application shell
+├── assets/main.css                    Nuxt entry styles
+├── components/ObyomViewer.vue         Client-only OBYOM WebGPU viewer
+├── layouts/default.vue                Shared header, navigation, and footer
+├── pages/index.vue                    Product landing page
+├── pages/demo.vue                     Interactive model demo
+├── pages/get-started.vue              Developer installation guide
+├── pages/for-clients.vue              Workshop/client workflow
+├── public/assets/3dmodels/stl/        Site-owned STL model assets
+├── public/obyom-logo.svg              Public logo asset
+├── nuxt.config.ts                     Nuxt and static-generation configuration
+├── package.json                       Nuxt and obyom-3d dependencies
+├── package-lock.json                  Locked dependency tree
+└── .output/public/                    Generated static site for deployment
 ```
 
 ## Development
 
-The site build imports the package declared in `package.json`:
-
-```text
-git+https://gitflic.ru/project/3axap777/obyom.git#master
-```
-
-For a fresh dependency revision, remove the disposable install state and reinstall:
+The Nuxt application imports the exact OBYOM revision declared in `package.json`. Keep `package-lock.json` in sync when updating dependencies:
 
 ```bash
-rm -rf node_modules package-lock.json
 npm install
-npm run build
+npm run typecheck
+npm run generate
 ```
 
-The generated bundle and shader filenames are versioned with the resolved OBYOM commit so that deployed browsers do not reuse an older runtime from cache.
+The generated static site is written to `.output/public` for deployment to GitHub Pages or another static host.
 
 ## Browser support
 
