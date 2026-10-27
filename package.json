@@ -1,25 +1,26 @@
 {
-  "name": "obyom-site",
+  "name": "obyom-nuxt-app",
   "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "build": "webpack --mode production",
-    "check": "webpack --mode production --stats errors-only"
-  },
-  "dependencies": {
-    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#master"
-  },
+  "type": "module",
   "engines": {
     "node": ">=22.23.4",
     "npm": ">=10.0.0"
   },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#1025de4e1c4fe22f1a9202296f9055d745f17dec",
+    "nuxt": "^4.6.2",
+    "vue": "^3.5.44"
+  },
   "devDependencies": {
-    "copy-webpack-plugin": "^13.0.1",
-    "css-loader": "^7.1.2",
-    "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.7.3",
-    "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1"
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.4"
   }
 }
