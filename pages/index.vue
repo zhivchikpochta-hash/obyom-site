@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useHead } from '#imports';
+
 useHead({ title: 'OBYOM — WebGPU 3D Viewer for the Browser', meta: [{ name: 'description', content: 'OBYOM is a WebGPU 3D viewer and JavaScript library for interactive STL and 3D model previews directly in the browser.' }] });
 </script>
 

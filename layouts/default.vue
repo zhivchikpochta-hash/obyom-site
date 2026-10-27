@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from '#imports';
+
 const route = useRoute();
 const path = computed(() => route.path);
 const isDemo = computed(() => path.value === '/demo');

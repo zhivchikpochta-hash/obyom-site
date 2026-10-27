@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useHead } from '#imports';
+
 useHead({ title: 'Browser-Based 3D Model Preview for Workshops | OBYOM' });
 </script>
 

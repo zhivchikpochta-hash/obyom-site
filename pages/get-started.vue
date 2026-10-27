@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useHead } from '#imports';
+
 useHead({ title: 'WebGPU 3D Viewer JavaScript Library — Get Started | OBYOM' });
 </script>
 

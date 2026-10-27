@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useHead } from '#imports';
+
 useHead({ title: 'Interactive WebGPU 3D Viewer Demo | OBYOM' });
 const model = ref('/assets/3dmodels/stl/OBYOM_LOGO-47173defdc07.stl');
 const label = ref('OBYOM Logo');
