@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       library_ref:
-        description: "OBYOM GitFlic ref to install"
+        description: "OBYOM GitFlic ref for the public runtime"
         required: true
         default: "master"
+        type: string
+      test_library_ref:
+        description: "OBYOM GitFlic ref for the private test page"
+        required: true
+        default: "test"
         type: string
   repository_dispatch:
     types:
@@ -24,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LIBRARY_REF: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.library_ref || inputs.library_ref || 'master' }}
+      TEST_LIBRARY_REF: ${{ inputs.test_library_ref || 'test' }}
 
     steps:
       - name: Check out site
@@ -37,7 +43,7 @@ jobs:
         with:
           node-version: 22.23.4
 
-      - name: Set OBYOM GitFlic dependency ref
+      - name: Set public OBYOM GitFlic dependency ref
         run: |
           node - <<'NODE'
           const fs = require('fs');
@@ -47,73 +53,120 @@ jobs:
           fs.writeFileSync(path, `${JSON.stringify(packageJson, null, 2)}\n`);
           NODE
 
-      - name: Install site dependencies from GitFlic
+      - name: Install public site dependencies
         run: |
           rm -rf node_modules package-lock.json
           npm install
 
-      - name: Read installed OBYOM revision
-        id: library-revision
+      - name: Read installed public OBYOM revision
+        id: public-library-revision
         run: |
           resolved="$(node -p "require('./package-lock.json').packages['node_modules/obyom-3d'].resolved")"
           sha="${resolved##*#}"
           if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "Could not determine installed OBYOM commit: $resolved" >&2
+            echo "Could not determine installed public OBYOM commit: $resolved" >&2
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
 
-      - name: Verify installed OBYOM package layout
+      - name: Verify installed public OBYOM package layout
         run: |
           test -s node_modules/obyom-3d/dist/package/index.js
           test -s node_modules/obyom-3d/dist/types/index.d.ts
 
-      - name: Build site
+      - name: Build public site runtime
         run: npm run build
 
-      - name: Apply cache-busted runtime names
+      - name: Publish public runtime name
         env:
-          RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
+          RUNTIME_VERSION: ${{ steps.public-library-revision.outputs.short_sha }}
         run: |
-          bundle_name="site-${RUNTIME_VERSION}.js"
-          mv site.js "$bundle_name"
-          find . -maxdepth 1 -type f -name 'site-*.js' ! -name "$bundle_name" -delete
+          mv site.js "site-${RUNTIME_VERSION}.js"
+          find . -maxdepth 1 -type f -name 'site-*.js' ! -name "site-${RUNTIME_VERSION}.js" -delete
           python3 - <<'PY'
           from pathlib import Path
           import os, re
+          runtime = f"site-{os.environ['RUNTIME_VERSION']}.js"
           for path in Path('.').glob('*.html'):
+              if path.name == 'test.html':
+                  continue
               text = path.read_text()
-              text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="site-{os.environ["RUNTIME_VERSION"]}.js"></script>', text)
+              text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="{runtime}"></script>', text)
               if count:
                   path.write_text(text)
-                  print(f'Updated {path}: {count} runtime reference(s)')
           PY
 
-      - name: Add static landing page to the deployed site
+      - name: Set private test OBYOM dependency ref
         run: |
-          test -s landing.html
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = 'package.json';
+          const packageJson = JSON.parse(fs.readFileSync(path, 'utf8'));
+          packageJson.dependencies['obyom-3d'] = `git+https://gitflic.ru/project/3axap777/obyom.git#${process.env.TEST_LIBRARY_REF}`;
+          fs.writeFileSync(path, `${JSON.stringify(packageJson, null, 2)}\n`);
+          NODE
+          rm -rf node_modules package-lock.json
+          npm install
 
-      - name: Verify real library integration
-        env:
-          RUNTIME_VERSION: ${{ steps.library-revision.outputs.short_sha }}
+      - name: Read installed test OBYOM revision
+        id: test-library-revision
         run: |
-          test -s "site-${RUNTIME_VERSION}.js"
+          resolved="$(node -p "require('./package-lock.json').packages['node_modules/obyom-3d'].resolved")"
+          sha="${resolved##*#}"
+          if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Could not determine installed test OBYOM commit: $resolved" >&2
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
+
+      - name: Build private test runtime
+        run: npm run build
+
+      - name: Publish private test runtime name
+        env:
+          RUNTIME_VERSION: ${{ steps.test-library-revision.outputs.short_sha }}
+        run: |
+          mv site.js "site-${RUNTIME_VERSION}.js"
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, re
+          path = Path('test.html')
+          text = path.read_text()
+          text, count = re.subn(r'<script src="site(?:-[^"]+)?\.js"></script>', f'<script src="site-{os.environ["RUNTIME_VERSION"]}.js"></script>', text)
+          if count != 1:
+              raise SystemExit(f'Expected one test runtime reference, found {count}')
+          path.write_text(text)
+          PY
+
+      - name: Verify public and private runtimes
+        env:
+          PUBLIC_RUNTIME: ${{ steps.public-library-revision.outputs.short_sha }}
+          TEST_RUNTIME: ${{ steps.test-library-revision.outputs.short_sha }}
+        run: |
+          test -s "site-${PUBLIC_RUNTIME}.js"
+          test -s "site-${TEST_RUNTIME}.js"
           test -s "assets/3dmodels/stl/pumpkin_face.stl"
-          node --check "site-${RUNTIME_VERSION}.js"
-          grep -Fq 'new OBYOM' "site-${RUNTIME_VERSION}.js"
-          grep -Fq 'data-model-path="assets/3dmodels/stl/pumpkin_face.stl"' landing.html
-          grep -Fq "script src=\"site-${RUNTIME_VERSION}.js\"" index.html
+          node --check "site-${PUBLIC_RUNTIME}.js"
+          node --check "site-${TEST_RUNTIME}.js"
+          grep -Fq 'new OBYOM' "site-${PUBLIC_RUNTIME}.js"
+          grep -Fq 'new OBYOM' "site-${TEST_RUNTIME}.js"
+          grep -Fq "script src=\"site-${PUBLIC_RUNTIME}.js\"" index.html
+          grep -Fq "script src=\"site-${TEST_RUNTIME}.js\"" test.html
+          grep -Fq 'noindex, nofollow' test.html
+
+      - name: Restore package metadata after dual runtime build
+        run: |
+          git checkout -- package.json package-lock.json
 
       - name: Remove obsolete runtime artifacts
         run: |
           rm -f script.js bundle.js site.js
           find . -maxdepth 1 -type f -name 'bundle-*.js' -delete
-          test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 1
+          test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 2
 
       - name: Commit and push built site
-        env:
-          LIBRARY_REF: ${{ env.LIBRARY_REF }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -124,5 +177,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: build site with OBYOM ${LIBRARY_REF}"
+          git commit -m "chore: build public and private OBYOM runtimes"
           git push origin main
