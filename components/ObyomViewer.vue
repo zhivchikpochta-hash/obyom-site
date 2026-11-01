@@ -10,8 +10,10 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const status = ref('Checking WebGPU support…');
 const message = ref('Loading viewer…');
 let viewer: { start(): Promise<void>; load(path: string): Promise<void>; destroy(): void } | null = null;
+let startGeneration = 0;
 
 onMounted(async () => {
+  const generation = ++startGeneration;
   if (!canvas.value) return;
   if (!('gpu' in navigator)) {
     status.value = 'WebGPU unavailable';
@@ -21,9 +23,13 @@ onMounted(async () => {
 
   try {
     const { OBYOM } = await import('obyom-3d');
+    if (generation !== startGeneration) return;
     viewer = new OBYOM({ canvas: canvas.value, params: {} });
-    await viewer.start();
-    await viewer.load(props.modelPath);
+    const instance = viewer;
+    await instance.start();
+    if (generation !== startGeneration || viewer !== instance) return;
+    await instance.load(props.modelPath);
+    if (generation !== startGeneration || viewer !== instance) return;
     status.value = 'Ready';
     message.value = '';
   } catch (error) {
@@ -34,6 +40,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+  startGeneration += 1;
   viewer?.destroy();
   viewer = null;
 });

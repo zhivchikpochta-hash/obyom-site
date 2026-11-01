@@ -14,7 +14,7 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#1025de4e1c4fe22f1a9202296f9055d745f17dec",
+    "obyom-3d": "git+https://gitflic.ru/project/3axap777/obyom.git#517148c93b57c2e44dcf60aee93d57c287c1036e",
     "nuxt": "^4.6.2",
     "vue": "^3.5.44"
   },
