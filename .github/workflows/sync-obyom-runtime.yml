@@ -67,8 +67,8 @@ jobs:
             echo "Could not determine installed public OBYOM commit: $resolved" >&2
             exit 1
           fi
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
+          echo "full_sha=$sha" >> "$GITHUB_OUTPUT"
 
       - name: Verify installed public OBYOM package layout
         run: |
@@ -118,8 +118,8 @@ jobs:
             echo "Could not determine installed test OBYOM commit: $resolved" >&2
             exit 1
           fi
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
           echo "short_sha=${sha:0:12}" >> "$GITHUB_OUTPUT"
+          echo "full_sha=$sha" >> "$GITHUB_OUTPUT"
 
       - name: Build private test runtime
         run: npm run build
@@ -147,6 +147,7 @@ jobs:
         run: |
           test -s "site-${PUBLIC_RUNTIME}.js"
           test -s "site-${TEST_RUNTIME}.js"
+          test "$(find . -maxdepth 1 -type f -name 'site-*.js' | wc -l)" -eq 2
           test -s "assets/3dmodels/stl/pumpkin_face.stl"
           node --check "site-${PUBLIC_RUNTIME}.js"
           node --check "site-${TEST_RUNTIME}.js"
