@@ -14,6 +14,7 @@
     .private-test-card h1 { margin: 0 0 12px; font-size: clamp(34px, 6vw, 64px); }
     .private-test-card > p { color: var(--muted); }
     .private-test .viewer-card { margin-top: 32px; }
+    .debug-log { margin-top: 16px; max-height: 180px; overflow: auto; padding: 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); background: #0d1116; font: 12px/1.45 ui-monospace, monospace; white-space: pre-wrap; }
   </style>
 </head>
 <body>
@@ -33,9 +34,28 @@
         </div>
         <p class="model-caption"><strong id="model-name">OBYOM Logo</strong><span>Library branch: test</span></p>
         <pre class="viewer-config" id="viewer-config" aria-label="Viewer configuration"></pre>
+        <pre class="debug-log" id="debug-log" aria-label="Temporary lifecycle diagnostics"></pre>
       </section>
     </section>
   </main>
+  <script>
+    (() => {
+      const output = document.getElementById('debug-log');
+      const started = performance.getEntriesByType('navigation')[0];
+      const lines = [`navigation: ${started?.type || 'unknown'}`, `loaded: ${new Date().toISOString()}`];
+      const write = (name, event) => {
+        const detail = event?.detail ? ` ${JSON.stringify(event.detail)}` : '';
+        lines.push(`${name}${detail}`);
+        if (lines.length > 30) lines.shift();
+        if (output) output.textContent = lines.join('\\n');
+        console.info(`[OBYOM debug] ${name}`, event?.detail || '');
+      };
+      for (const name of ['start', 'renderer-ready', 'device-lost', 'recovery-start', 'recovery-end', 'destroy']) {
+        window.addEventListener(`obyom:${name}`, (event) => write(name, event));
+      }
+      write('diagnostics-ready');
+    })();
+  </script>
   <script src="site-ff164114c202.js"></script>
 </body>
 </html>
