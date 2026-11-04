@@ -101,9 +101,9 @@ async function loadModel(path, label) {
   await start();
 }
 
-document.querySelectorAll('[data-model-path]').forEach((button) => {
+document.querySelectorAll('button[data-model-path]').forEach((button) => {
   button.addEventListener('click', () => {
-    document.querySelectorAll('[data-model-path]').forEach((item) => item.removeAttribute('aria-current'));
+    document.querySelectorAll('button[data-model-path]').forEach((item) => item.removeAttribute('aria-current'));
     button.setAttribute('aria-current', 'true');
     void loadModel(button.dataset.modelPath, button.dataset.modelLabel || button.textContent.trim());
   });
