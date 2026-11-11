@@ -159,7 +159,7 @@
       card.style.zIndex = String(index === activeIndex ? 30 : 10 + index);
       if (inDeck) {
         card.style.position = 'fixed';
-        card.style.top = `${pinStart + stackStep * index}px`;
+        card.style.top = `${pinStart + stackStep * depth}px`;
         card.style.left = `${cardLefts[index]}px`;
         card.style.width = `${cardWidths[index]}px`;
       } else {
