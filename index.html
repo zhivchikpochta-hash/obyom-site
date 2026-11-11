@@ -129,7 +129,7 @@
       const start = stickyTop;
       const end = viewportHeight * 0.72;
       const progress = index === activeIndex
-        ? Math.min(1, Math.max(0, (start - nextShellTop) / Math.max(end - start, 1)))
+        ? Math.min(1, Math.max(0, (viewportHeight * 0.72 - nextShellTop) / Math.max(viewportHeight * 0.72 - start, 1)))
         : 0;
       const translateY = -18 * progress;
       const scale = 1 - 0.045 * progress;
