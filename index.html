@@ -104,6 +104,7 @@
     card.style.removeProperty('transform');
     card.style.removeProperty('opacity');
     card.style.removeProperty('box-shadow');
+    card.style.removeProperty('z-index');
   });
 
   const updateProcessCards = () => {
@@ -114,16 +115,27 @@
     }
 
     const viewportHeight = window.innerHeight;
+    const stickyTop = 112;
+    const stackGap = 12;
+    const shells = processCards.map((card) => card.closest('.process-card-shell'));
+    const shellTops = shells.map((shell) => shell?.getBoundingClientRect().top ?? 0);
+    let activeIndex = 0;
+    shellTops.forEach((top, index) => {
+      if (top <= stickyTop + 1) activeIndex = index;
+    });
+
     processCards.forEach((card, index) => {
-      const rect = card.getBoundingClientRect();
-      const start = 112 + index * 12;
+      const shellTop = shellTops[index];
+      const stackOffset = Math.min(0, stickyTop + index * stackGap - shellTop);
+      const start = stickyTop;
       const end = viewportHeight * 0.72;
-      const progress = Math.min(1, Math.max(0, (start - rect.top) / Math.max(end - start, 1)));
-      const translateY = -18 * progress;
+      const progress = Math.min(1, Math.max(0, (start - shellTop) / Math.max(end - start, 1)));
+      const translateY = stackOffset - 18 * progress;
       const scale = 1 - 0.045 * progress;
       const shadowY = 24 - 10 * progress;
       const shadowBlur = 70 - 24 * progress;
       const shadowAlpha = 0.22 - 0.04 * progress;
+      card.style.zIndex = String(index === activeIndex ? 20 : index);
       card.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
       card.style.opacity = `${1 - progress * 0.12}`;
       card.style.boxShadow = `0 ${shadowY.toFixed(1)}px ${shadowBlur.toFixed(1)}px rgba(0, 0, 0, ${shadowAlpha.toFixed(3)})`;
