@@ -107,15 +107,18 @@
   let shellSources = [];
   let cardWidths = [];
   let cardLefts = [];
-  let processSectionBottom = 0;
+  let nextSectionTop = 0;
+  let deckVisualBottom = 0;
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
   const measureGeometry = () => {
     shellSources = processShells.map((shell) => shell?.getBoundingClientRect().top + window.scrollY || 0);
     cardWidths = processCards.map((card) => card.getBoundingClientRect().width);
     cardLefts = processCards.map((card) => card.getBoundingClientRect().left);
-    const processSection = document.querySelector('#how');
-    processSectionBottom = processSection?.getBoundingClientRect().bottom + window.scrollY || 0;
+    const nextSection = document.querySelector('#pilot');
+    nextSectionTop = nextSection?.getBoundingClientRect().top + window.scrollY || 0;
+    const cardHeight = Math.max(310, ...processCards.map((card) => card.getBoundingClientRect().height));
+    deckVisualBottom = pinStart + stackStep * Math.max(processCards.length - 1, 0) + cardHeight;
 
   };
 
@@ -135,7 +138,7 @@
 
   const updateProcessCards = () => {
     processFrame = 0;
-    if (!processMedia.matches || motionMedia.matches || processCards.length === 0 || window.scrollY >= processSectionBottom - pinStart) {
+    if (!processMedia.matches || motionMedia.matches || processCards.length === 0 || nextSectionTop - window.scrollY <= deckVisualBottom) {
       resetProcessCards();
       return;
     }
