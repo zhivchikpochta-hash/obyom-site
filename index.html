@@ -103,17 +103,19 @@
   const pinStart = 51;
   const stackStep = 56;
   const depthScale = 0.016;
-  const circleRange = 8000;
   let processFrame = 0;
   let shellSources = [];
   let cardWidths = [];
   let cardLefts = [];
+  let processSectionBottom = 0;
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
   const measureGeometry = () => {
     shellSources = processShells.map((shell) => shell?.getBoundingClientRect().top + window.scrollY || 0);
     cardWidths = processCards.map((card) => card.getBoundingClientRect().width);
     cardLefts = processCards.map((card) => card.getBoundingClientRect().left);
+    const processSection = document.querySelector('#how');
+    processSectionBottom = processSection?.getBoundingClientRect().bottom + window.scrollY || 0;
 
   };
 
@@ -133,7 +135,7 @@
 
   const updateProcessCards = () => {
     processFrame = 0;
-    if (!processMedia.matches || motionMedia.matches || processCards.length === 0) {
+    if (!processMedia.matches || motionMedia.matches || processCards.length === 0 || window.scrollY >= processSectionBottom - pinStart) {
       resetProcessCards();
       return;
     }
