@@ -3,3 +3,6 @@ dist/
 
 # Local comparison and working documentation
 /docs/
+
+# Local Webpack output
+/site.js
