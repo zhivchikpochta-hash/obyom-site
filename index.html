@@ -158,7 +158,8 @@
       const inDeck = completed || (index === enteringIndex && progress > 0);
       const depth = index < frontIndex ? frontIndex - index : 0;
       const entering = index === enteringIndex;
-      const translateY = entering ? (1 - progress) * (window.innerHeight - pinStart - 24) : 0;
+      const entryOffset = (shellSources[index] || 0) - scrollY - pinStart;
+      const translateY = entering ? entryOffset * (1 - progress) : 0;
       const scale = 1 - depthScale * depth;
       const opacity = entering ? Math.max(0.86, progress) : 1 - Math.min(0.045, depth * 0.015);
 
