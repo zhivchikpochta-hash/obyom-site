@@ -144,38 +144,41 @@
     }
 
     const scrollY = window.scrollY;
-    let activeIndex = -1;
-    shellSources.forEach((sourceTop, index) => {
-      if (scrollY >= sourceTop - pinStart) activeIndex = index;
+    const entryDistance = window.innerHeight * 0.42;
+    const entryStates = processCards.map((_, index) => {
+      const sourceTop = shellSources[index] || 0;
+      return clamp((scrollY - (sourceTop - pinStart - entryDistance)) / entryDistance);
     });
+    const enteringIndex = entryStates.findIndex((progress) => progress < 1 && progress > 0);
+    const frontIndex = enteringIndex >= 0 ? Math.max(0, enteringIndex - 1) : entryStates.reduce((last, progress, index) => progress >= 1 ? index : last, -1);
 
     processCards.forEach((card, index) => {
-      const sourceTop = shellSources[index] || 0;
-      const nextTop = shellSources[index + 1] ?? (sourceTop + window.innerHeight);
-      const progress = index === activeIndex ? clamp((scrollY - (nextTop - pinStart - window.innerHeight * 0.42)) / (window.innerHeight * 0.42)) : index < activeIndex ? 1 : 0;
-      const depth = index < activeIndex ? activeIndex - index : 0;
-      const inDeck = index <= activeIndex;
-      const translateY = 0;
+      const progress = entryStates[index];
+      const completed = progress >= 1;
+      const inDeck = completed || (index === enteringIndex && progress > 0);
+      const depth = index < frontIndex ? frontIndex - index : 0;
+      const entering = index === enteringIndex;
+      const translateY = entering ? (1 - progress) * (window.innerHeight - pinStart - 24) : 0;
       const scale = 1 - depthScale * depth;
-      const opacity = 1 - (index < activeIndex ? Math.min(0.045, depth * 0.015) : 0);
-      card.style.zIndex = String(index === activeIndex ? 30 : 10 + index);
+      const opacity = entering ? Math.max(0.86, progress) : 1 - Math.min(0.045, depth * 0.015);
+
       if (inDeck) {
         card.style.position = 'fixed';
         card.style.top = `${pinStart + stackStep * depth}px`;
         card.style.left = `${cardLefts[index]}px`;
         card.style.width = `${cardWidths[index]}px`;
+        card.style.zIndex = String(entering ? 30 : 10 + index);
       } else {
         card.style.removeProperty('position');
         card.style.removeProperty('top');
         card.style.removeProperty('left');
         card.style.removeProperty('width');
+        card.style.zIndex = '1';
       }
       card.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
       card.style.opacity = opacity.toFixed(3);
       card.style.boxShadow = `0 ${Math.round(16 - 2 * depth)}px ${Math.round(46 - 4 * depth)}px rgba(0, 0, 0, ${(0.14 + 0.02 * depth).toFixed(3)})`;
     });
-
-
   };
 
   const scheduleProcessUpdate = () => {
