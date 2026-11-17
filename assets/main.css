@@ -1,6 +1,20 @@
 @import './styles-v2.css';
 
-.site-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; position: relative; z-index: 1; }
+.process-section { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.2fr); gap: 48px; padding: 96px 0 120px; }
+.section-intro { align-self: start; }
+.section-intro h2 { max-width: 12ch; font-size: clamp(36px, 5vw, 64px); line-height: .98; letter-spacing: -.05em; }
+.section-intro p:not(.eyebrow) { color: var(--muted); }
+.process-cards { position: relative; display: block; padding: 24px 0 34vh; }
+.process-card-shell { display: block; position: relative; min-height: calc(100vh - 51px); margin-bottom: calc(471px - 100vh); }
+.process-card { position: relative; top: auto; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) 180px; gap: 28px; height: 310px; margin: 0 0 24px; padding: 30px; border: 1px solid color-mix(in srgb,var(--line) 86%,transparent); border-radius: 24px; background: color-mix(in srgb,var(--panel) 96%,transparent); box-shadow: 0 24px 70px rgba(0,0,0,.22); overflow: hidden; transform-origin: 50% 0; will-change: transform,opacity; }
+.process-card-copy { position: relative; z-index: 2; align-self: end; }
+.process-card-index { display: block; margin-bottom: 42px; color: var(--accent-bright); font: 800 11px/1 Inter,ui-sans-serif,system-ui; letter-spacing: .16em; text-transform: uppercase; }
+.process-card strong { display: block; max-width: 18ch; color: var(--text); font-size: clamp(22px,2.8vw,34px); line-height: 1.02; letter-spacing: -.045em; }
+.process-card p { max-width: 40ch; margin: 14px 0 0; color: var(--muted); }
+.process-graphic { display: grid; place-items: center; align-self: stretch; border: 1px solid var(--line-strong); border-radius: 18px; background: var(--panel-raised); color: var(--accent-bright); font-size: 64px; font-weight: 800; letter-spacing: -.08em; }
+@media (max-width: 1199px) { .process-section { grid-template-columns: 1fr; gap: 24px; padding: 64px 0 80px; } .process-card-shell { position: static !important; display: block; min-height: 0 !important; margin-bottom: 0 !important; } .process-card { position: static !important; top: auto !important; height: auto; min-height: 260px; margin: 0 0 24px !important; transform: none !important; opacity: 1 !important; z-index: auto !important; will-change: auto; } }
+@media (prefers-reduced-motion: reduce) { .process-card-shell { position: static !important; display: block; min-height: 0 !important; margin-bottom: 0 !important; } .process-card { position: static !important; top: auto !important; transform: none !important; opacity: 1 !important; z-index: auto !important; } }
+@media (max-width: 760px) { .process-card { grid-template-columns: 1fr; min-height: 0; padding: 22px; } .process-card-copy { align-self: auto; } .process-card-index { margin-bottom: 24px; } .process-graphic { height: 140px; } }
 main { min-height: 60vh; }
 .manifesto { padding: 96px 0 72px; border-bottom: 1px solid var(--line); }
 .manifesto-intro { color: var(--muted); font-size: clamp(32px, 5vw, 64px); line-height: 1; letter-spacing: -.05em; }
